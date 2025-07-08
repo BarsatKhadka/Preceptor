@@ -10,7 +10,7 @@ export const LandingPage = () => {
                 style={{ backgroundImage: `url(${bgImage})`, fontFamily: 'Inter, sans-serif' }}
             >
                 {/* Headline Section - above Buddha eyes */}
-                <div className="pt-32 md:pt-0 flex flex-col items-center text-center w-full px-4 md:px-0 select-none">
+                <div className="pt-32 md:pt-16 flex flex-col items-center text-center w-full px-4 md:px-0 select-none">
                     <h1
                         className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold mb-2 text-gray-300 drop-shadow-xl tracking-tight"
                     >
@@ -24,7 +24,7 @@ export const LandingPage = () => {
                 </div>
 
                 {/* Download & Email Section - below the earth*/}
-                <div className="flex flex-col items-center w-full px-2 md:px-0 mt-96 md:mt-[32rem]">
+                <div className="flex flex-col items-center w-full px-2 md:px-0 mt-96 md:mt-[590px]">
                     <div className="flex flex-col md:flex-row gap-4 md:gap-16 justify-center w-full max-w-2xl">
                         <button className="flex items-center gap-2 px-6 md:px-8 py-4 rounded-xl border border-[#4f5b93] bg-[#020611] text-white text-base md:text-lg font-medium transition-colors duration-200 hover:border-blue-400 focus:outline-none w-full md:w-auto justify-center">
                             <FaWindows className="w-6 h-6" />
