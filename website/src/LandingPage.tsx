@@ -1,5 +1,5 @@
 import bgImage from "./assets/bgImage.png";
-import { FaWindows, FaLinux, FaGithub, FaBook, FaPlay } from "react-icons/fa";
+import { FaWindows, FaLinux, FaGithub, FaPlay } from "react-icons/fa";
 
 export const LandingPage = () => {
     return (
