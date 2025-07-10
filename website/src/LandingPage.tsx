@@ -37,10 +37,13 @@ export const LandingPage = () => {
                     </div>
                     {/* Info Buttons Container */}
                     <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-[120px] mt-8 mb-4 w-full max-w-2xl">
+                        <a href = "https://github.com/BarsatKhadka/Preceptor">
                         <button className="flex items-center px-6 md:px-8 py-3 rounded-xl border border-[#4f5b93] bg-[#020611] text-white text-base md:text-lg font-medium transition-colors duration-200 hover:border-blue-400 focus:outline-none w-full md:w-auto justify-center">
+
                             <FaGithub className="w-6 h-6" />
                             What is Preceptor?
                         </button>
+                        </a>
                         <button className="flex items-center gap-2 px-6 py-3 rounded-xl border border-[#4f5b93] bg-[#020611] text-white text-base md:text-lg font-medium transition-colors duration-200 hover:border-blue-400 focus:outline-none w-full md:w-auto justify-center">
                             <FaPlay className="w-5 h-5" />
                             Watch Demo 
