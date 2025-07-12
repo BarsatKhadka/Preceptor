@@ -45,7 +45,7 @@ def add_current_precept(preceptList):
     conn.commit()
     conn.close()
 
-def move_current_precept_to_history():
+def move_all_current_precept_to_history():
     conn = initialize_db()
     cursor = conn.cursor()
 
@@ -61,4 +61,11 @@ def move_current_precept_to_history():
     conn.commit()
     conn.close()
     
+def delete_all_precept_history():
+    conn = initialize_db()
+    cursor = conn.cursor()
+    
+    cursor.execute("DELETE FROM precepts_history")
 
+    conn.commit()
+    conn.close()
