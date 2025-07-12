@@ -1,9 +1,13 @@
 from fastapi import FastAPI
 from utils import get_os
+from monitor.monitorMain import monitor_main
+import shutil 
 
 app = FastAPI()
+os_name = get_os()
+
 
 @app.get("/data")
 def read_data():
-    os_name = get_os()
-    return {"message": f"Hello from FastAPI {os_name}"}
+    current_tab_info = monitor_main(os_name=os_name)
+    return {"message": current_tab_info()} 
