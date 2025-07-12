@@ -44,5 +44,21 @@ def add_current_precept(preceptList):
         cursor.execute("INSERT INTO precepts (content) VALUES (?)", (p,))
     conn.commit()
     conn.close()
+
+def move_current_precept_to_history():
+    conn = initialize_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT content FROM precepts")
+    current_precepts = cursor.fetchall()
+
+    for(content,) in current_precepts:
+        cursor.execute(
+            'INSERT INTO precepts_history (content) VALUES (?)', (content,)
+        )
+    
+    cursor.execute("DELETE FROM precepts")
+    conn.commit()
+    conn.close()
     
 
