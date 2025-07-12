@@ -14,6 +14,8 @@ def initialize_db():
 def create_table():
     conn = initialize_db()
     cursor = conn.cursor()
+
+    # Current Precepts table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS precepts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,6 +23,26 @@ def create_table():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+
+    # History of Precepts table 
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS precepts_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            content TEXT NOT NULL,
+            moved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
     conn.commit()
     conn.close()
+
+def add_current_precept(preceptList):
+    create_table()
+    conn = initialize_db()
+    cursor = conn.cursor()
+    for p in preceptList:
+        cursor.execute("INSERT INTO precepts (content) VALUES (?)", (p,))
+    conn.commit()
+    conn.close()
+    
 

@@ -4,7 +4,7 @@ from currentTab.currentTab import currentTab
 import time
 from pydantic import BaseModel
 from typing import List 
-from precept.sqliteDb import create_table
+from precept.sqliteDb import add_current_precept
 
 app = FastAPI()
 os_name = get_os()
@@ -19,7 +19,8 @@ def read_data():
 class Precept(BaseModel):
     precept: List[str]  
 
-@app.post("/precept")
+@app.post("/addPrecept")
 def post_precept(precept: Precept):
-    create_table()
-    return precept.precept
+    add_current_precept(precept.precept)
+
+    
