@@ -89,3 +89,29 @@ def get_all_history_precepts():
     conn.close()
 
     return [{"id" : row[0] , "precept" : row[1], "movedAt": row[2]} for row in rows]
+
+def move_current_precept_to_history(id:int):
+    conn = initialize_db()
+    cursor = conn.cursor 
+    cursor.execute("SELECT content FROM precepts WHERE id = ?", (id,))
+    row = cursor.fetchone()
+    if row is None:
+        conn.close()
+    
+    content = row[0]
+
+    # Insert into precepts_history
+    cursor.execute("INSERT INTO precepts_history (content) VALUES (?)", (content,))
+
+    cursor.execute("DELETE FROM precepts WHERE id = ?", (id,))
+
+    conn.commit()
+    conn.close()
+
+def delete_history_precept(id: int):
+    conn = initialize_db()
+    cursor = conn.cursor
+    cursor.execute("DELETE FROM precepts_history WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+
