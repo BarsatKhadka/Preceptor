@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI , Request
 from utils import get_os
 from currentTab.currentTab import currentTab
 import time
@@ -11,11 +11,18 @@ os_name = get_os()
 
 
 @app.get("/currentTab")
-def read_data():
+def current_tab():
     time.sleep(3)
     current_tab_info = currentTab(os_name=os_name)
     return {"message": current_tab_info()} 
 
+@app.post("/tabInfo")
+async def current_tab_browser(request: Request):
+    latest_tab = await request.json()
+    print(latest_tab)
+
+
+#CRUD for adding and deleting current and history precepts
 class Precept(BaseModel):
     precept: List[str]  
 
