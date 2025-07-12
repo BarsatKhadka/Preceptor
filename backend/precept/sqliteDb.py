@@ -69,3 +69,23 @@ def delete_all_precept_history():
 
     conn.commit()
     conn.close()
+
+def get_all_current_precepts():
+    conn = initialize_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id , content , created_at FROM precepts")
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    return [{"id" : row[0] , "precept" : row[1], "createdAt": row[2]} for row in rows]
+
+def get_all_history_precepts():
+    conn = initialize_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id , content , moved_at FROM precepts_history")
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    return [{"id" : row[0] , "precept" : row[1], "movedAt": row[2]} for row in rows]

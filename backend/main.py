@@ -4,7 +4,7 @@ from currentTab.currentTab import currentTab
 import time
 from pydantic import BaseModel
 from typing import List 
-from precept.sqliteDb import add_current_precept , move_all_current_precept_to_history , delete_all_precept_history 
+from precept.sqliteDb import add_current_precept , move_all_current_precept_to_history , delete_all_precept_history , get_all_current_precepts , get_all_history_precepts
 
 app = FastAPI()
 os_name = get_os()
@@ -24,12 +24,21 @@ def add_precept(precept: Precept):
     add_current_precept(precept.precept)
     return True 
 
-@app.post("/deleteAllCurrentPrecept")
+@app.post("/deleteAllCurrentPrecepts")
 def delete_precept():
     move_all_current_precept_to_history()
     return True
 
-@app.post("/deleteAllHistoryPercept")
+@app.post("/deleteAllHistoryPrecepts")
 def delete_all_precept_permanent():
     delete_all_precept_history()
     return True
+
+@app.get("/getAllCurrentPrecepts")
+def getAllCurrentPrecepts():
+    return get_all_current_precepts()
+
+@app.get("/getAllHistoryPrecepts")
+def getAllHistoryPrecepts():
+    return get_all_history_precepts()
+    
