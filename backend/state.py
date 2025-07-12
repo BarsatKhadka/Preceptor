@@ -1,0 +1,1 @@
+latest_tab_info = {'title': '', 'url': ''}

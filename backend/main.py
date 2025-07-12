@@ -4,12 +4,13 @@ from currentTab.currentTab import currentTab
 import time
 from pydantic import BaseModel
 from typing import List 
+from state import latest_tab_info
 from precept.sqliteDb import add_current_precept , move_all_current_precept_to_history , delete_all_precept_history , get_all_current_precepts , get_all_history_precepts , move_current_precept_to_history , delete_history_precept
 
 app = FastAPI()
 os_name = get_os()
 
-
+# Tab Info 
 @app.get("/currentTab")
 def current_tab():
     time.sleep(3)
@@ -19,8 +20,29 @@ def current_tab():
 @app.post("/tabInfo")
 async def current_tab_browser(request: Request):
     latest_tab = await request.json()
+    latest_tab_info.update(latest_tab)
     print(latest_tab)
+    return latest_tab
 
+#Ollama
+@app.get("/ollama")
+def is_ollama_running():
+    try:
+        import os
+        import requests
+        response = requests.get(os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"))
+        return response.status_code == 200
+    except (requests.exceptions.RequestException, ImportError):
+        return False
+
+@app.get("/models")
+def get_models():
+    try:
+        import ollama
+        models = ollama.list()['models']
+        return {"models": [m.model for m in models]}
+    except (ImportError, Exception) as e:
+        return {"models": [], "error": str(e)}
 
 #CRUD for adding and deleting current and history precepts
 class Precept(BaseModel):
