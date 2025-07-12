@@ -2,7 +2,7 @@ import shutil
 import subprocess
 
 
-def monitor_main(os_name):
+def currentTab(os_name):
     if os_name.lower() == "linux":
         return get_active_window_info_linux
 
@@ -17,6 +17,8 @@ def get_active_window_info_linux():
     try: 
         active_window_id = subprocess.check_output(['xdotool', 'getactivewindow']).decode().strip()
         active_wm_class = subprocess.check_output(['xprop','-id',active_window_id,'WM_CLASS']).decode()
+        # active_wm_class.strip().split('=')[-1].split(',')[-1].strip().strip('"')
         return active_wm_class
+        
     except subprocess.CalledProcessError as e : 
         return f"error {e}"
