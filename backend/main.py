@@ -6,6 +6,8 @@ from pydantic import BaseModel
 from typing import List 
 from state import latest_tab_info
 from precept.sqliteDb import add_current_precept , move_all_current_precept_to_history , delete_all_precept_history , get_all_current_precepts , get_all_history_precepts , move_current_precept_to_history , delete_history_precept
+from localAI.ollama import ollama_evaluation
+import ollama
 
 app = FastAPI()
 os_name = get_os()
@@ -38,11 +40,18 @@ def is_ollama_running():
 @app.get("/models")
 def get_models():
     try:
-        import ollama
         models = ollama.list()['models']
         return {"models": [m.model for m in models]}
     except (ImportError, Exception) as e:
         return {"models": [], "error": str(e)}
+
+@app.get("/ollamaEvaluation")
+def ollamaEvaluation(model:str):
+    tab_info = current_tab()
+    precepts = get_all_current_precepts()
+    return ollama_evaluation(tab_info["message"] , precepts , model)
+
+
 
 #CRUD for adding and deleting current and history precepts
 class Precept(BaseModel):
