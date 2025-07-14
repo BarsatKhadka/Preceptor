@@ -55,7 +55,7 @@ def ollamaEvaluation(model:str):
 
 #CRUD for adding and deleting current and history precepts
 class Precept(BaseModel):
-    precept: List[str]  
+    precept: str  
 
 @app.post("/addCurrentPrecept")
 def add_precept(precept: Precept):

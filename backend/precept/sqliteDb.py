@@ -36,12 +36,11 @@ def create_table():
     conn.commit()
     conn.close()
 
-def add_current_precept(preceptList):
+def add_current_precept(precept):
     create_table()
     conn = initialize_db()
     cursor = conn.cursor()
-    for p in preceptList:
-        cursor.execute("INSERT INTO precepts (content) VALUES (?)", (p,))
+    cursor.execute("INSERT INTO precepts (content) VALUES (?)", (precept,))
     conn.commit()
     conn.close()
 
@@ -78,7 +77,7 @@ def get_all_current_precepts():
 
     conn.close()
 
-    return [{"id" : row[0] , "precept" : row[1], "createdAt": row[2]} for row in rows]
+    return {"preceptData": rows[0]}
 
 def get_all_history_precepts():
     conn = initialize_db()

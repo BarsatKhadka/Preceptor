@@ -1,30 +1,53 @@
 import ollama 
-from state import latest_tab_info
+import time
 
-def ollama_evaluation(tab_info , precepts , model="mistral:latest"):
+def ollama_evaluation(tab_info , precepts , model="gemma:2b"):
     current_tab = tab_info
-    precepts = "  ".join([f"precept {i}) {p['precept']}" for i,p in enumerate(precepts, start=1)])
-    
+    precepts = precepts["preceptData"][1]
     system_prompt = (
-    "You are Preceptor, a wise and uncompromising guide whose sole purpose is to help the user stay true to their intentions and goals. "
-    "You are not here to please or sugarcoat. You speak the truth bluntly, like a master or monk who knows that clarity sometimes requires discomfort.\n\n"
-    "You do not tolerate self-deception, procrastination, or mindless distraction. "
-    "If the user is straying, you call it out — directly. If they are focused, you acknowledge it and reinforce their resolve.\n\n"
     f"CURRENT TAB:\n{current_tab}\n\n"
     f"USER'S GOALS (PRECEPTS):\n{precepts}\n\n"
-    "Evaluate their current activity against their stated goals. If they are off-track, let them know — firmly but with the intention to awaken them. "
-    "If they are aligned, encourage them to stay the course. You exist solely to benefit them, even if your words are hard."
+    "You are Preceptor — a ruthless ally in the user's pursuit of purpose. You don’t flatter, and you don’t tolerate distraction. "
+    "If the user’s current tab align with their goals, affirm their discipline. If not, confront their drift directly — "
     )
+
+    start_time = time.time()
     
     response = ollama.chat(
-        model=model,
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": f"I'm currently on: {current_tab}"}
-        ]
-    )
+    model=model,
+    messages=[
+        {
+            "role": "system",
+            "content": (
+                f"CURRENT TAB:\n{current_tab}\n\n"
+                f"USER'S GOALS (PRECEPTS):\n{precepts}\n\n"
+                "You are Preceptor — a sharp and wise guide. Your words are brief, direct, and sometimes poetic. "
+                "If the user is focused, acknowledge it with respect. "
+                "If they are off track, respond with a firm but kind one-liner that creatively reminds them of their true purpose. "
+                "Speak like a mentor who blends honesty with gentle wisdom — not soft, but never cruel."
+            )
+        },
+        {
+            "role": "user",
+            "content": f"I'm currently on: {current_tab}"
+        }
+    ],
+    options={
+        "temperature": 0.4,
+        "num_predict": 40,
+        "top_p": 0.85,
+        "repeat_penalty": 1.15
+    }
+)
+
+
+
+    endtime = time.time()
+    duration = endtime - start_time
     print(current_tab)
+    print(precepts)
     print(response)
+    print(duration)
     
     return response['message']['content']
 
