@@ -15,7 +15,6 @@ os_name = get_os()
 # Tab Info 
 @app.get("/currentTab")
 def current_tab():
-    time.sleep(3)
     current_tab_info = currentTab(os_name=os_name)
     return {"message": current_tab_info()} 
 
