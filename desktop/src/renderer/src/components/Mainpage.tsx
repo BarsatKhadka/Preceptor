@@ -1,7 +1,17 @@
-export function Mainpage(): React.JSX.Element {
-    return (
-        <div>
-            <h1>Mainpage</h1>
-        </div>
-    )
+import { Navbar } from './Navbar';
+import { OllamaAi } from './OllamaAi';
+import { Precepts } from './Precepts';
+import { Extension } from './Extension';
+
+export default function MainPage() {
+  return (
+    <>
+      <Navbar />
+      <div className="w-full flex flex-row justify-between items-stretch">
+        <OllamaAi />
+        <Precepts />
+        <Extension />
+      </div>
+    </>
+  );
 }   

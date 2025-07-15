@@ -1,11 +1,11 @@
 import './index.css'
-import { Mainpage } from './components/Mainpage'
+import MainPage from './components/Mainpage'
 
 function App(): React.JSX.Element {
 
   return (
     <>
-      <Mainpage />
+      <MainPage />
     </>
   )
 }
