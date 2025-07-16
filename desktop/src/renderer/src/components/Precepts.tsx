@@ -1,8 +1,9 @@
 import * as React from "react";
 import axios from "axios";
+import StatusCheck from "./StatusCheck";
 
 export function Precepts() {
-  const [currentPrecept, setCurrentPrecept] = React.useState<string>("");
+  const [currentPrecept, setCurrentPrecept] = React.useState<{id: number, content: string, time?: string} | null>(null);
   const [historyPrecepts, setHistoryPrecepts] = React.useState<{id: number, precept: string, movedAt?: string}[]>([]);
   const [input, setInput] = React.useState("");
   const [loading, setLoading] = React.useState(false);
@@ -10,10 +11,15 @@ export function Precepts() {
   const fetchCurrent = async () => {
     const res = await axios.get("http://localhost:8000/getAllCurrentPrecepts");
     // Expecting { preceptData: [id, content, time] }
-    const content = Array.isArray(res.data.preceptData) && res.data.preceptData.length > 1
-      ? res.data.preceptData[1]
-      : "";
-    setCurrentPrecept(content);
+    if (Array.isArray(res.data.preceptData) && res.data.preceptData.length > 1) {
+      setCurrentPrecept({
+        id: res.data.preceptData[0],
+        content: res.data.preceptData[1],
+        time: res.data.preceptData[2]
+      });
+    } else {
+      setCurrentPrecept(null);
+    }
   };
 
   const fetchHistory = async () => {
@@ -38,10 +44,14 @@ export function Precepts() {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center h-full min-h-0 border-l border-r border-gray-200 rounded-2xl shadow-sm px-4 md:px-8 py-8 relative overflow-hidden" 
+    <div className="flex-1 flex flex-col items-center justify-start pt-8 h-full min-h-0 border-l border-r border-gray-200 rounded-2xl shadow-sm px-4 md:px-8 py-8 relative overflow-hidden" 
          style={{ backgroundColor: '#fffde5', backgroundImage: 'repeating-linear-gradient(to bottom, transparent, transparent 31px, #f3e9d2 32px)' }}>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-yellow-50/20 pointer-events-none"></div>
       <div className="relative z-10 w-full max-w-lg mx-auto flex flex-col gap-8">
+        {/* Status Check */}
+        <div>
+          <StatusCheck />
+        </div>
         {/* Current Precept */}
         <div>
           <h2 className="text-xl font-serif font-semibold text-gray-700 mb-2 tracking-wide text-center" style={{ fontFamily: "'IBM Plex Serif', serif", letterSpacing: '0.04em' }}>
@@ -50,7 +60,7 @@ export function Precepts() {
           <ul className="mb-4 space-y-2">
             {!currentPrecept && <li className="text-gray-400 italic">No precept set yet.</li>}
             {currentPrecept && (
-              <li className="text-gray-700 font-mono pl-2">{currentPrecept}</li>
+              <li className="text-gray-700 font-mono pl-2">{currentPrecept.content}</li>
             )}
           </ul>
           <form onSubmit={addPrecept} className="flex gap-2">
