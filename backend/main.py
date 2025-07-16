@@ -1,4 +1,5 @@
-from fastapi import FastAPI , Request
+from fastapi import FastAPI , Request 
+from fastapi.middleware.cors import CORSMiddleware
 from utils import get_os
 from currentTab.currentTab import currentTab
 import time
@@ -10,6 +11,14 @@ from localAI.ollama import ollama_evaluation
 import ollama
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 os_name = get_os()
 
 # Tab Info 
