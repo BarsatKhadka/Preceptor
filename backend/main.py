@@ -67,6 +67,7 @@ class Precept(BaseModel):
 
 @app.post("/addCurrentPrecept")
 def add_precept(precept: Precept):
+    move_all_current_precept_to_history()
     add_current_precept(precept.precept)
     return True 
 
