@@ -73,7 +73,7 @@ export function Precepts() {
             />
             <button
               type="submit"
-              className="px-3 sm:px-4 py-2 rounded-md bg-pink-400 text-white font-semibold shadow hover:bg-pink-500 transition disabled:opacity-60 text-sm sm:text-base"
+              className="px-3 sm:px-4 py-2 rounded-md bg-black text-white font-semibold shadow hover:bg-black/80 transition disabled:opacity-60 text-sm sm:text-base"
               disabled={loading || !input.trim()}
             >
               Set

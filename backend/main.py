@@ -98,3 +98,8 @@ def deleteCurrentPrecept(id:int):
 def deleteHistoryPrecept(id:int):
     delete_history_precept(id)
     return True 
+
+
+@app.get("/test")
+def test():
+    return True
