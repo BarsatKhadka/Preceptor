@@ -1,7 +1,7 @@
 import './index.css'
 import { Navbar } from './components/Navbar';
-import { OllamaAi } from './components/OllamaAi';
-import { Precepts } from './components/Precepts';
+import  OllamaAi  from './components/Ollama/OllamaAi';
+import { Precepts } from './components/Precepts/Precepts';
 import { Extension } from './components/Extension';
 
 export default function App() {

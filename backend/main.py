@@ -94,7 +94,7 @@ def deleteCurrentPrecept(id:int):
     move_current_precept_to_history(id)
     return True
 
-@app.get("/deleteHistoryPrecept")
+@app.post("/deleteHistoryPrecept")
 def deleteHistoryPrecept(id:int):
     delete_history_precept(id)
     return True 

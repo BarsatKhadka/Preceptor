@@ -93,7 +93,7 @@ def get_all_history_precepts():
 
 def move_current_precept_to_history(id:int):
     conn = initialize_db()
-    cursor = conn.cursor 
+    cursor = conn.cursor()
     cursor.execute("SELECT content FROM precepts WHERE id = ?", (id,))
     row = cursor.fetchone()
     if row is None:
@@ -111,7 +111,7 @@ def move_current_precept_to_history(id:int):
 
 def delete_history_precept(id: int):
     conn = initialize_db()
-    cursor = conn.cursor
+    cursor = conn.cursor()
     cursor.execute("DELETE FROM precepts_history WHERE id = ?", (id,))
     conn.commit()
     conn.close()

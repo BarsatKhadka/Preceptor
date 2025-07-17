@@ -1,6 +1,6 @@
 import * as React from "react";
 import axios from "axios";
-import StatusCheck from "./StatusCheck";
+import StatusCheck from "../StatusCheck";
 import HistoryPrecepts from "./HistoryPrecepts";
 
 export function Precepts() {

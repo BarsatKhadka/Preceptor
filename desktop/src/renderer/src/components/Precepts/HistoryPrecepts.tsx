@@ -43,6 +43,19 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
     setShowDeleteConfirm(false);
   };
 
+  const handleDeleteHistoryPrecept = async (id: number) => {
+    try {
+      await axios.post(
+        `http://localhost:8000/deleteHistoryPrecept?id=${id}`,
+        {},
+        { headers: { "Content-Type": "application/json" } }
+      );
+      fetchHistory();
+    } catch (err) {
+      console.error("Failed to delete history precept", err);
+    }
+  };
+
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10, justifyContent: 'space-between' }}>
@@ -100,6 +113,7 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
             flexDirection: 'column',
             gap: 2,
             wordBreak: 'break-word',
+            position: 'relative',
           }}>
             <span>{p.precept}</span>
             {p.movedAt && (
@@ -107,6 +121,29 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
                 {`moved at: ${new Date(p.movedAt).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`}
               </span>
             )}
+            <button
+              onClick={() => handleDeleteHistoryPrecept(p.id)}
+              style={{
+                position: 'absolute',
+                top: 8,
+                right: 8,
+                background: 'none',
+                border: 'none',
+                color: '#e11d48',
+                cursor: 'pointer',
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+              title="Delete this precept"
+            >
+              <svg width="16" height="16" fill="none" stroke="#e11d48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                <polyline points="3 6 5 6 21 6" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+                <line x1="10" y1="11" x2="10" y2="17" />
+                <line x1="14" y1="11" x2="14" y2="17" />
+              </svg>
+            </button>
           </li>
         ))}
       </ul>
@@ -147,7 +184,7 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
         </div>
       )}
     </div>
-  );
+  );  
 };
 
 export default HistoryPrecepts; 
