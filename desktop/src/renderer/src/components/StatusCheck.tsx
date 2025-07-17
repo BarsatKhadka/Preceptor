@@ -7,7 +7,11 @@ interface StatusItem {
   message: string;
 }
 
-export default function StatusCheck() {
+interface StatusCheckProps {
+  onRefresh?: () => void;
+}
+
+const StatusCheck: React.FC<StatusCheckProps> = ({ onRefresh }) => {
   const [statuses, setStatuses] = React.useState<StatusItem[]>([
     { name: 'Service', status: 'loading', message: '' },
     { name: 'Ollama', status: 'loading', message: '' },
@@ -75,7 +79,7 @@ export default function StatusCheck() {
     const serviceRunning = await checkService();
     if (serviceRunning) {
       updateStatus(0, 'running', '');
-    } // else, leave as loading (never error)
+    }
     // Ollama
     const ollamaRunning = await checkOllama();
     updateStatus(1, ollamaRunning ? 'running' : 'error', '');
@@ -91,6 +95,11 @@ export default function StatusCheck() {
   React.useEffect(() => {
     runChecks();
   }, []);
+
+  const handleRefresh = () => {
+    runChecks();
+    if (onRefresh) onRefresh();
+  };
 
   const getStatusText = (item: StatusItem) => {
     if (item.status === 'loading') {
@@ -121,12 +130,6 @@ export default function StatusCheck() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-        <div></div>
-        <button onClick={runChecks} disabled={isChecking} style={{ fontFamily: 'monospace', fontSize: 14, padding: '2px 10px', cursor: isChecking ? 'not-allowed' : 'pointer' }}>
-          Refresh
-        </button>
-      </div>
       <div key={refreshKey}>
         {statuses.map((item, idx) => (
           <div
@@ -159,4 +162,6 @@ export default function StatusCheck() {
       `}</style>
     </div>
   );
-}
+};
+
+export default StatusCheck;

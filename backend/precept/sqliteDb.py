@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from datetime import datetime
 
 def initialize_db():
     DB_Folder = os.path.join(os.path.expanduser("~"), "preceptorDB")
@@ -40,7 +41,8 @@ def add_current_precept(precept):
     create_table()
     conn = initialize_db()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO precepts (content) VALUES (?)", (precept,))
+    local_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    cursor.execute("INSERT INTO precepts (content, created_at) VALUES (?, ?)", (precept, local_time))
     conn.commit()
     conn.close()
 

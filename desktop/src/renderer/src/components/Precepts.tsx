@@ -7,6 +7,7 @@ export function Precepts() {
   const [historyPrecepts, setHistoryPrecepts] = React.useState<{id: number, precept: string, movedAt?: string}[]>([]);
   const [input, setInput] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [statusRefreshKey, setStatusRefreshKey] = React.useState(0);
 
   const fetchCurrent = async () => {
     const res = await axios.get("http://localhost:8000/getAllCurrentPrecepts");
@@ -41,6 +42,13 @@ export function Precepts() {
     setInput("");
     await fetchCurrent();
     setLoading(false);
+    handleRefreshAll();
+  };
+
+  const handleRefreshAll = () => {
+    fetchCurrent();
+    fetchHistory();
+    setStatusRefreshKey(k => k + 1);
   };
 
   return (
@@ -48,21 +56,55 @@ export function Precepts() {
          style={{ backgroundColor: '#fffde5', backgroundImage: 'repeating-linear-gradient(to bottom, transparent, transparent 31px, #f3e9d2 32px)' }}>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-yellow-50/20 pointer-events-none"></div>
       <div className="relative z-10 w-full max-w-lg mx-auto flex flex-col gap-4 sm:gap-6 lg:gap-8">
+        {/* Refresh Button on Top */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
+          <button onClick={handleRefreshAll} style={{ fontFamily: 'monospace', fontSize: 14, padding: '2px 10px', cursor: 'pointer' }}>
+            Refresh
+          </button>
+        </div>
         {/* Status Check */}
         <div>
-          <StatusCheck />
+          <StatusCheck key={statusRefreshKey} />
         </div>
         {/* Current Precept */}
         <div>
-          <h2 className="text-lg sm:text-xl font-serif font-semibold text-gray-700 mb-2 tracking-wide text-center" style={{ fontFamily: "'IBM Plex Serif', serif", letterSpacing: '0.04em' }}>
-            Current Precept
-          </h2>
           <ul className="mb-3 sm:mb-4 space-y-2">
-            {!currentPrecept && <li className="text-gray-400 italic text-sm sm:text-base">No precept set yet.</li>}
+            {!currentPrecept && (
+              <li style={{ color: '#888', fontStyle: 'italic', fontFamily: 'monospace', fontSize: 15 }}>{'> Current precept : (none)'}</li>
+            )}
             {currentPrecept && (
-              <li className="text-gray-700 font-mono pl-2 text-sm sm:text-base">{currentPrecept.content}</li>
+              <li>
+                <span style={{
+                  background: '#fff9c4',
+                  borderRadius: 6,
+                  padding: '2px 6px',
+                  color: '#222',
+                  fontFamily: 'monospace',
+                  fontSize: 15,
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word',
+                  boxDecorationBreak: 'clone',
+                  WebkitBoxDecorationBreak: 'clone',
+                }}>{`> Current precept : ${currentPrecept.content}`}</span>
+              </li>
             )}
           </ul>
+          {/* Created at box */}
+          {currentPrecept && currentPrecept.time && (
+            <div style={{
+              background: '#f7f7f7',
+              borderRadius: 8,
+              boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
+              padding: '8px 16px',
+              marginBottom: 16,
+              display: 'inline-block',
+              fontFamily: 'monospace',
+              fontSize: 14,
+              color: '#444',
+            }}>
+              {`Created at: ${new Date(currentPrecept.time).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`}
+            </div>
+          )}
           <form onSubmit={addPrecept} className="flex flex-col sm:flex-row gap-2">
             <input
               className="flex-1 rounded-md border border-gray-300 bg-white/80 px-3 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-200 transition text-sm font-mono shadow"
