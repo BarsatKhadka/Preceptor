@@ -9,17 +9,18 @@ interface StatusItem {
 
 export default function StatusCheck() {
   const [statuses, setStatuses] = React.useState<StatusItem[]>([
-    { name: 'Service', status: 'loading', message: 'Checking service...' },
-    { name: 'Ollama', status: 'loading', message: 'Checking Ollama...' },
-    { name: 'Models', status: 'loading', message: 'Checking models...' },
-    { name: 'Extension', status: 'loading', message: 'Checking extension...' }
+    { name: 'Service', status: 'loading', message: '' },
+    { name: 'Ollama', status: 'loading', message: '' },
+    { name: 'Models', status: 'loading', message: '' },
+    { name: 'Extension', status: 'loading', message: '' }
   ]);
   const [isChecking, setIsChecking] = React.useState(true);
+  const [refreshKey, setRefreshKey] = React.useState(0);
 
   const checkService = async () => {
     try {
       const response = await axios.get('http://localhost:8000/test', { timeout: 3000 });
-      return response.data === true; // Check if response is exactly true
+      return response.data === true;
     } catch {
       return false;
     }
@@ -44,14 +45,10 @@ export default function StatusCheck() {
   };
 
   const checkExtension = async () => {
-    // Check if browser extension is installed by trying to communicate with it
     try {
-      // This is a placeholder - in a real implementation, you'd check for the extension
-      // For now, we'll simulate the check
       return new Promise<boolean>((resolve) => {
         setTimeout(() => {
-          // Simulate extension check - you can replace this with actual extension detection
-          resolve(false); // Set to true if extension is detected
+          resolve(false);
         }, 1000);
       });
     } catch {
@@ -67,41 +64,27 @@ export default function StatusCheck() {
 
   const runChecks = async () => {
     setIsChecking(true);
-    
-    // Reset all statuses to loading first
     setStatuses([
-      { name: 'Service', status: 'loading', message: 'Checking service...' },
-      { name: 'Ollama', status: 'loading', message: 'Checking Ollama...' },
-      { name: 'Models', status: 'loading', message: 'Checking models...' },
-      { name: 'Extension', status: 'loading', message: 'Checking extension...' }
+      { name: 'Service', status: 'loading', message: '' },
+      { name: 'Ollama', status: 'loading', message: '' },
+      { name: 'Models', status: 'loading', message: '' },
+      { name: 'Extension', status: 'loading', message: '' }
     ]);
-    
-    // Check service
+    setRefreshKey(prev => prev + 1); // trigger animation
+    // Service
     const serviceRunning = await checkService();
-    updateStatus(0, serviceRunning ? 'running' : 'error', 
-      serviceRunning ? 'Service running' : 'Service not responding');
-    
-    await new Promise(resolve => setTimeout(resolve, 300)); // Animation delay
-    
-    // Check Ollama
+    if (serviceRunning) {
+      updateStatus(0, 'running', '');
+    } // else, leave as loading (never error)
+    // Ollama
     const ollamaRunning = await checkOllama();
-    updateStatus(1, ollamaRunning ? 'running' : 'error', 
-      ollamaRunning ? 'Ollama running' : 'Ollama not running');
-    
-    await new Promise(resolve => setTimeout(resolve, 300));
-    
-    // Check models
+    updateStatus(1, ollamaRunning ? 'running' : 'error', '');
+    // Models
     const modelsFound = await checkModels();
-    updateStatus(2, modelsFound ? 'running' : 'not-found', 
-      modelsFound ? 'Models available' : 'No models found');
-    
-    await new Promise(resolve => setTimeout(resolve, 300));
-    
-    // Check extension
+    updateStatus(2, modelsFound ? 'running' : 'not-found', '');
+    // Extension
     const extensionInstalled = await checkExtension();
-    updateStatus(3, extensionInstalled ? 'running' : 'not-found', 
-      extensionInstalled ? 'Extension connected' : 'Extension not found');
-    
+    updateStatus(3, extensionInstalled ? 'running' : 'not-found', '');
     setIsChecking(false);
   };
 
@@ -109,104 +92,64 @@ export default function StatusCheck() {
     runChecks();
   }, []);
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'loading':
-        return (
-          <div className="w-4 h-4 border-2 border-pink-300 border-t-pink-600 rounded-full animate-spin"></div>
-        );
-      case 'running':
-        return (
-          <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-            <div className="w-2 h-2 bg-white rounded-full"></div>
-          </div>
-        );
-      case 'error':
-        return (
-          <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
-            <div className="w-2 h-2 bg-white rounded-full"></div>
-          </div>
-        );
-      case 'not-found':
-        return (
-          <div className="w-4 h-4 bg-yellow-500 rounded-full flex items-center justify-center">
-            <div className="w-2 h-2 bg-white rounded-full"></div>
-          </div>
-        );
-      default:
-        return null;
+  const getStatusText = (item: StatusItem) => {
+    if (item.status === 'loading') {
+      return `> ${item.name} is loading`;
     }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'running':
-        return 'text-green-600';
-      case 'error':
-        return 'text-red-600';
-      case 'not-found':
-        return 'text-yellow-600';
-      default:
-        return 'text-gray-600';
+    if (item.status === 'running') {
+      return (
+        <span style={{ color: 'green' }}>{`> ${item.name} loaded`}</span>
+      );
     }
+    if (item.status === 'not-found') {
+      return (
+        <span style={{ color: 'black' }}>{`> ${item.name} not found`}</span>
+      );
+    }
+    if (item.status === 'error') {
+      if (item.name === 'Ollama') {
+        return (
+          <span style={{ color: 'red' }}>{`> Ollama error (service needs to be loaded first)`}</span>
+        );
+      }
+      return (
+        <span style={{ color: 'red' }}>{`> ${item.name} error`}</span>
+      );
+    }
+    return null;
   };
 
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-between mb-3">
-        <h1 className="text-sm sm:text-base font-medium text-gray-700">Status Check</h1>
-        <button
-          onClick={runChecks}
-          disabled={isChecking}
-          className="flex items-center gap-1.5 px-2 py-1.5 rounded-md bg-pink-100 hover:bg-pink-200 text-pink-600 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-xs font-medium"
-          title="Refresh status"
-        >
-          <svg 
-            className={`w-3 h-3 ${isChecking ? 'animate-spin' : ''}`} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={2} 
-              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" 
-            />
-          </svg>
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+        <div></div>
+        <button onClick={runChecks} disabled={isChecking} style={{ fontFamily: 'monospace', fontSize: 14, padding: '2px 10px', cursor: isChecking ? 'not-allowed' : 'pointer' }}>
           Refresh
         </button>
       </div>
-      <div className="space-y-2">
-        {statuses.map((item, index) => (
-          <div 
+      <div key={refreshKey}>
+        {statuses.map((item, idx) => (
+          <div
             key={item.name}
-            className={`flex items-center gap-3 p-2 rounded-lg transition-all duration-300 ease-in-out ${
-              item.status === 'loading' ? 'bg-gray-50' : 
-              item.status === 'running' ? 'bg-green-50' :
-              item.status === 'error' ? 'bg-red-50' : 'bg-yellow-50'
-            }`}
             style={{
-              animationDelay: `${index * 100}ms`,
-              animation: 'fadeInUp 0.5s ease-out forwards'
+              marginBottom: 4,
+              fontFamily: 'monospace',
+              fontSize: 15,
+              opacity: 0,
+              transform: 'translateY(30px)',
+              animation: `slideUpFadeIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards`,
+              animationDelay: `${idx * 120}ms`,
             }}
           >
-            {getStatusIcon(item.status)}
-            <div className="flex-1">
-              <span className="text-sm font-medium text-gray-700">{item.name}:</span>
-              <span className={`text-sm ml-2 ${getStatusColor(item.status)}`}>
-                {item.message}
-              </span>
-            </div>
+            {getStatusText(item)}
           </div>
         ))}
       </div>
-      
       <style>{`
-        @keyframes fadeInUp {
+        @keyframes slideUpFadeIn {
           from {
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(30px);
           }
           to {
             opacity: 1;
