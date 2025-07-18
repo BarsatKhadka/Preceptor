@@ -74,10 +74,37 @@ const OllamaAi: React.FC<OllamaAiProps> = ({ refreshKey }) => {
             </span> and keep your data secure. 
           </p>
           {/* Ollama Status Component */}
-          <div className="mt-4 w-full" style={{ background: '#fafaf9', borderRadius: 8, border: '1px solid #eee', padding: '0', minHeight: 80 }}>
-            {error ? (
-              <OllamaNotRunning onRefresh={handleRefresh} error={error} />
-            ) : loading ? (
+          <div
+            className="mt-4 w-full"
+            style={{
+              border: 'none',
+              background: 'none',
+              borderRadius: 0,
+              padding: 0,
+              minHeight: 0,
+              position: 'relative',
+            }}
+          >
+            {error && (
+              <div
+                style={{
+                  background: '#ffeaea',
+                  borderRadius: 0,
+                  padding: '2px 6px',
+                  color: '#a94442',
+                  fontFamily: 'monospace',
+                  fontSize: 15,
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word',
+                  boxDecorationBreak: 'clone',
+                  WebkitBoxDecorationBreak: 'clone',
+                  margin: 0,
+                }}
+              >
+                Failed to connect to Ollama service
+              </div>
+            )}
+            {loading ? (
               <div className="flex items-center px-4 py-3">
                 <span className="font-mono text-base text-gray-500">Checking Ollama status...</span>
               </div>
