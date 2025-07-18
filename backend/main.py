@@ -10,6 +10,8 @@ from precept.sqliteDb import add_current_precept , move_all_current_precept_to_h
 from localAI.ollama import ollama_evaluation
 import ollama
 
+last_extension_ping = 0
+
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -31,7 +33,6 @@ def current_tab():
 async def current_tab_browser(request: Request):
     latest_tab = await request.json()
     latest_tab_info.update(latest_tab)
-    print(latest_tab)
     return latest_tab
 
 #Ollama
@@ -57,10 +58,9 @@ def get_models():
 def ollamaEvaluation(model:str):
     tab_info = current_tab()
     precepts = get_all_current_precepts()
+    print(tab_info)
     print(precepts)
     return ollama_evaluation(tab_info["message"] , precepts , model)
-
-
 
 #CRUD for adding and deleting current and history precepts
 class Precept(BaseModel):
@@ -100,6 +100,17 @@ def deleteHistoryPrecept(id:int):
     delete_history_precept(id)
     return True 
 
+@app.post("/extension-alive")
+def extension_alive():
+    global last_extension_ping
+    last_extension_ping = time.time()
+    return {"ok": True}
+
+@app.get("/extension-status")
+def extension_status():
+    now = time.time()
+    active = (now - last_extension_ping) < 60
+    return {"active": active, "last_ping": last_extension_ping}
 
 @app.get("/test")
 def test():

@@ -17,6 +17,15 @@ function sendTabInfo(tabId) {
     });
 }
 
+function pingBackend() {
+    fetch("http://localhost:8000/extension-alive", { method: "POST" });
+}
+
+// Ping on startup
+pingBackend();
+// Ping every 3 seconds
+setInterval(pingBackend, 3000);
+
 chrome.tabs.onActivated.addListener((activeInfo) => {
     sendTabInfo(activeInfo.tabId);
 });
