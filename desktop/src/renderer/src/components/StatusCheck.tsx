@@ -1,5 +1,6 @@
 import * as React from "react";
 import axios from "axios";
+import { useModelStore } from "../components/Ollama/../../store";
 
 interface StatusItem {
   name: string;
@@ -102,10 +103,16 @@ const StatusCheck: React.FC<StatusCheckProps> = ({ onRefresh }) => {
   };
 
   const getStatusText = (item: StatusItem) => {
+    const currentModel = useModelStore.getState().currentModel;
     if (item.status === 'loading') {
       return `> ${item.name} is loading`;
     }
     if (item.status === 'running') {
+      if (item.name === 'Models') {
+        return (
+          <span style={{ color: 'green' }}>{`> Models loaded (current: ${currentModel || '(none)'})`}</span>
+        );
+      }
       return (
         <span style={{ color: 'green' }}>{`> ${item.name} loaded`}</span>
       );
