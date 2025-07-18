@@ -7,7 +7,6 @@ interface OllamaStatusProps {
 const OllamaStatus: React.FC<OllamaStatusProps> = ({ onRefresh }) => {
   const getOSInstructions = () => {
     const platform = navigator.platform.toLowerCase();
-    
     if (platform.includes('win')) {
       return {
         title: "Windows",
@@ -37,45 +36,22 @@ const OllamaStatus: React.FC<OllamaStatusProps> = ({ onRefresh }) => {
       };
     }
   };
-
   const osInfo = getOSInstructions();
-
   return (
-    <div className="w-full max-w-2xl mx-auto p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-          <h3 className="text-lg font-semibold text-gray-900">No Models Installed</h3>
+    <div className="w-full" style={{ background: '#fafaf9', borderRadius: 8, padding: '16px 0', border: '1px solid #eee', marginTop: 8 }}>
+      <div className="flex items-center justify-between mb-2 px-4">
+        <div className="flex items-center">
+          <div className="w-2 h-2 bg-yellow-400 rounded-full mr-2"></div>
+          <span className="font-mono text-base text-black">{'>'} No models installed</span>
         </div>
-        <button
-          onClick={onRefresh}
-          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-        >
-          Refresh
-        </button>
+        <button onClick={onRefresh} className="underline text-sm text-gray-600 hover:text-black p-0 bg-none border-none font-mono">Refresh</button>
       </div>
-
-      {/* Content */}
-      <div className="space-y-4">
-        <p className="text-gray-700">
-          Install models on <strong>{osInfo.title}</strong>:
-        </p>
-        
-        <div className="space-y-2">
-          {osInfo.commands.map((command, index) => (
-            <div key={index} className="flex items-center gap-2 p-3 bg-gray-50 border border-gray-200 rounded-lg">
-              <span className="text-gray-400 text-sm">$</span>
-              <code className="font-mono text-sm text-gray-900">
-                {command}
-              </code>
-            </div>
-          ))}
-        </div>
-
-        <p className="text-sm text-gray-500">
-          Run these commands in your terminal, then refresh to see available models.
-        </p>
+      <div className="flex flex-col gap-1 px-4">
+        <span className="font-mono text-sm text-gray-700 mb-1">Install models on <b>{osInfo.title}</b>:</span>
+        {osInfo.commands.map((command, idx) => (
+          <span key={idx} className="font-mono text-sm text-black">$ {command}</span>
+        ))}
+        <span className="font-mono text-xs text-gray-500 mt-2">Run these in your terminal, then refresh.</span>
       </div>
     </div>
   );

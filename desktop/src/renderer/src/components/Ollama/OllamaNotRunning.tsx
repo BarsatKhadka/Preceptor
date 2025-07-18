@@ -2,12 +2,12 @@ import * as React from "react";
 
 interface OllamaNotRunningProps {
   onRefresh: () => void;
+  error?: string;
 }
 
-const OllamaNotRunning: React.FC<OllamaNotRunningProps> = ({ onRefresh }) => {
+const OllamaNotRunning: React.FC<OllamaNotRunningProps> = ({ onRefresh, error }) => {
   const getOSInstructions = () => {
     const platform = navigator.platform.toLowerCase();
-    
     if (platform.includes('win')) {
       return {
         title: "Windows",
@@ -15,8 +15,7 @@ const OllamaNotRunning: React.FC<OllamaNotRunningProps> = ({ onRefresh }) => {
         commands: [
           "winget install Ollama.Ollama",
           "ollama serve"
-        ],
-        description: "Download and install Ollama from the official website, then start the service."
+        ]
       };
     } else if (platform.includes('mac')) {
       return {
@@ -25,8 +24,7 @@ const OllamaNotRunning: React.FC<OllamaNotRunningProps> = ({ onRefresh }) => {
         commands: [
           "brew install ollama",
           "ollama serve"
-        ],
-        description: "Install via Homebrew or download from the official website, then start the service."
+        ]
       };
     } else {
       return {
@@ -35,60 +33,43 @@ const OllamaNotRunning: React.FC<OllamaNotRunningProps> = ({ onRefresh }) => {
         commands: [
           "curl -fsSL https://ollama.ai/install.sh | sh",
           "ollama serve"
-        ],
-        description: "Install using the official install script, then start the service."
+        ]
       };
     }
   };
-
   const osInfo = getOSInstructions();
-
   return (
-    <div className="w-full max-w-2xl mx-auto p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-          <h3 className="text-lg font-semibold text-gray-900">Ollama Not Running</h3>
+    <div className="w-full" style={{ background: '#fafaf9', borderRadius: 8, padding: '16px 0', border: '1px solid #eee', marginTop: 8 }}>
+      {error === 'Failed to connect to Ollama service' && (
+        <div style={{
+          background: '#ffeaea',
+          borderRadius: 6,
+          padding: '2px 6px',
+          color: '#a94442',
+          fontFamily: 'monospace',
+          fontSize: 15,
+          margin: '0 0 12px 0',
+          whiteSpace: 'pre-wrap',
+          wordBreak: 'break-word',
+          boxDecorationBreak: 'clone',
+          WebkitBoxDecorationBreak: 'clone',
+        }}>
+          Failed to connect to Ollama service
         </div>
-        <button
-          onClick={onRefresh}
-          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-        >
-          Refresh
-        </button>
+      )}
+      <div className="flex items-center justify-between mb-2 px-4">
+        <div className="flex items-center">
+          <div className="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
+          <span className="font-mono text-base text-black">{'>'} Ollama not running</span>
+        </div>
+        <button onClick={onRefresh} className="underline text-sm text-gray-600 hover:text-black p-0 bg-none border-none font-mono">Refresh</button>
       </div>
-
-      {/* Content */}
-      <div className="space-y-4">
-        <p className="text-gray-700">
-          Install Ollama on <strong>{osInfo.title}</strong>:
-        </p>
-        
-        <div className="space-y-2">
-          {osInfo.commands.map((command, index) => (
-            <div key={index} className="flex items-center gap-2 p-3 bg-gray-50 border border-gray-200 rounded-lg">
-              <span className="text-gray-400 text-sm">$</span>
-              <code className="font-mono text-sm text-gray-900">
-                {command}
-              </code>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-4 pt-2">
-          <a
-            href={osInfo.installUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors"
-          >
-            Download for {osInfo.title}
-          </a>
-          <span className="text-sm text-gray-500">
-            After installation, refresh to check status
-          </span>
-        </div>
+      <div className="flex flex-col gap-1 px-4">
+        <span className="font-mono text-sm text-gray-700 mb-1">Install Ollama on <b>{osInfo.title}</b>:</span>
+        {osInfo.commands.map((command, idx) => (
+          <span key={idx} className="font-mono text-sm text-black">$ {command}</span>
+        ))}
+        <a href={osInfo.installUrl} target="_blank" rel="noopener noreferrer" className="underline text-sm text-blue-700 hover:text-blue-900 mt-2 font-mono">Download for {osInfo.title}</a>
       </div>
     </div>
   );

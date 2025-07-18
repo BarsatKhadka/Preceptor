@@ -61,7 +61,7 @@ const OllamaAi: React.FC<OllamaAiProps> = ({ refreshKey }) => {
         </div>
         
         {/* Right side - Text content and status */}
-        <div className="flex flex-col gap-2 sm:gap-3 text-center sm:text-left">
+        <div className="flex flex-col gap-2 sm:gap-3 text-center sm:text-left w-full">
           <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 leading-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
             Setup Local AI through Ollama
           </h1>
@@ -73,61 +73,19 @@ const OllamaAi: React.FC<OllamaAiProps> = ({ refreshKey }) => {
               </span>
             </span> and keep your data secure. 
           </p>
-          
           {/* Ollama Status Component */}
-          <div className="mt-4">
-            {loading && (
-              <div style={{
-                background: '#f8f9fa',
-                borderRadius: 12,
-                padding: '16px 20px',
-                border: '1px solid #e9ecef',
-                fontFamily: 'monospace',
-                fontSize: 15,
-                color: '#6c757d',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-              }}>
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10"/>
-                  <polyline points="12 6 12 12 16 14"/>
-                </svg>
-                Checking Ollama status...
+          <div className="mt-4 w-full" style={{ background: '#fafaf9', borderRadius: 8, border: '1px solid #eee', padding: '0', minHeight: 80 }}>
+            {error ? (
+              <OllamaNotRunning onRefresh={handleRefresh} error={error} />
+            ) : loading ? (
+              <div className="flex items-center px-4 py-3">
+                <span className="font-mono text-base text-gray-500">Checking Ollama status...</span>
               </div>
-            )}
-
-            {error && (
-              <div style={{
-                background: '#f8d7da',
-                borderRadius: 12,
-                padding: '16px 20px',
-                border: '1px solid #f5c6cb',
-                fontFamily: 'monospace',
-                fontSize: 15,
-                color: '#721c24',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-              }}>
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10"/>
-                  <line x1="15" y1="9" x2="9" y2="15"/>
-                  <line x1="9" y1="9" x2="15" y2="15"/>
-                </svg>
-                {error}
-              </div>
-            )}
-
-            {!loading && !error && !ollamaStatus && (
+            ) : !ollamaStatus ? (
               <OllamaNotRunning onRefresh={handleRefresh} />
-            )}
-
-            {!loading && !error && ollamaStatus && models.length === 0 && (
+            ) : models.length === 0 ? (
               <OllamaStatus onRefresh={handleRefresh} />
-            )}
-
-            {!loading && !error && ollamaStatus && models.length > 0 && (
+            ) : (
               <OllamaModels models={models} onRefresh={handleRefresh} />
             )}
           </div>
