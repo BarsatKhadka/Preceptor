@@ -1,60 +1,114 @@
 import * as React from "react";
+import { FaApple, FaLinux, FaWindows } from "react-icons/fa";
 
 interface OllamaStatusProps {
   onRefresh: () => void;
 }
 
+const osOptions = [
+  {
+    key: 'win',
+    label: 'Windows',
+    logo: <FaWindows size={28} color="#222" />,
+    commands: [
+      "ollama pull llama2",
+      "ollama pull codellama",
+      "ollama pull mistral"
+    ],
+    title: 'Windows',
+  },
+  {
+    key: 'mac',
+    label: 'macOS',
+    logo: <FaApple size={28} color="#222" />,
+    commands: [
+      "ollama pull llama2",
+      "ollama pull codellama",
+      "ollama pull mistral"
+    ],
+    title: 'macOS',
+  },
+  {
+    key: 'linux',
+    label: 'Linux',
+    logo: <FaLinux size={28} color="#222" />,
+    commands: [
+      "ollama pull llama2",
+      "ollama pull codellama",
+      "ollama pull mistral"
+    ],
+    title: 'Linux',
+  },
+];
+
+function detectPlatform() {
+  const platform = navigator.platform.toLowerCase();
+  if (platform.includes('mac')) return 'mac';
+  if (platform.includes('win')) return 'win';
+  return 'linux';
+}
+
 const OllamaStatus: React.FC<OllamaStatusProps> = ({ onRefresh }) => {
-  const getOSInstructions = () => {
-    const platform = navigator.platform.toLowerCase();
-    if (platform.includes('win')) {
-      return {
-        title: "Windows",
-        commands: [
-          "ollama pull llama2",
-          "ollama pull codellama",
-          "ollama pull mistral"
-        ]
-      };
-    } else if (platform.includes('mac')) {
-      return {
-        title: "macOS",
-        commands: [
-          "ollama pull llama2",
-          "ollama pull codellama", 
-          "ollama pull mistral"
-        ]
-      };
-    } else {
-      return {
-        title: "Linux",
-        commands: [
-          "ollama pull llama2",
-          "ollama pull codellama",
-          "ollama pull mistral"
-        ]
-      };
-    }
-  };
-  const osInfo = getOSInstructions();
+  const [selectedOS, setSelectedOS] = React.useState<string>(detectPlatform());
+  const osInfo = osOptions.find(os => os.key === selectedOS) || osOptions[2];
+
   return (
-    <div className="w-full" style={{ background: '#fafaf9', borderRadius: 8, padding: '16px 0', border: '1px solid #eee', marginTop: 8 }}>
-      <div className="flex items-center justify-between mb-2 px-4">
-        <div className="flex items-center">
-          <div className="w-2 h-2 bg-yellow-400 rounded-full mr-2"></div>
-          <span className="font-mono text-base text-black">{'>'} No models installed</span>
-        </div>
+    <div className="w-full flex flex-col items-center justify-center bg-white shadow-sm px-0" style={{ maxWidth: 420, margin: '24px auto 0 auto' }}>
+      {/* Full-width gray bar at the top */}
+      <div style={{
+        width: '100%',
+        background: '#f3f4f6',
+        margin: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 24px',
+        height: 44,
+      }}>
+        <span className="font-mono text-base text-black">{'>'} No models installed</span>
         <button onClick={onRefresh} className="underline text-sm text-gray-600 hover:text-black p-0 bg-none border-none font-mono">Refresh</button>
       </div>
-      <div className="flex flex-col gap-1 px-4">
-        <span className="font-mono text-sm text-gray-700 mb-1">Install models on <b>{osInfo.title}</b>:</span>
-        {osInfo.commands.map((command, idx) => (
-          <span key={idx} className="font-mono text-sm text-black">$ {command}</span>
+      {/* Install Models Heading */}
+      <div className="w-full flex flex-col items-center justify-center pt-6 pb-4">
+        <h2 className="text-xl font-semibold text-black text-center">Install Models</h2>
+      </div>
+      {/* OS Selector */}
+      <div className="flex items-center justify-center gap-3 mt-2 mb-4 px-2 w-full">
+        {osOptions.map(os => (
+          <button
+            key={os.key}
+            onClick={() => setSelectedOS(os.key)}
+            style={{
+              background: selectedOS === os.key ? '#f3f4f6' : 'transparent',
+              borderRadius: 8,
+              border: 'none',
+              padding: '7px 10px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              cursor: 'pointer',
+              outline: selectedOS === os.key ? '2px solid #e5e7eb' : 'none',
+              transition: 'background 0.15s',
+              minWidth: 60,
+            }}
+          >
+            {os.logo}
+            <span className="text-xs mt-1 text-gray-700">{os.label}</span>
+          </button>
         ))}
-        <span className="font-mono text-xs text-gray-500 mt-2">Run these in your terminal, then refresh.</span>
+      </div>
+      {/* Install models guide for selected OS */}
+      <div style={{ width: '100%', padding: '0 20px' }}>
+        <div className="text-sm font-medium text-gray-900 mt-2 mb-2 text-center">Install models on <b>{osInfo.title}</b>:</div>
+        <div className="flex flex-col items-center gap-1 mb-4">
+          {osInfo.commands.map((command, idx) => (
+            <span key={idx} className="font-mono text-sm text-black">$ {command}</span>
+          ))}
+        </div>
+        <div className="text-xs text-gray-500 text-center mb-6">Run these in your terminal, then refresh.</div>
       </div>
     </div>
   );
 };
 
-export default OllamaStatus; 
+export default OllamaStatus;  
