@@ -1,6 +1,6 @@
 import OllamaAi from './Ollama/OllamaAi';
 import { Precepts } from './Precepts/Precepts';
-import { Extension } from './Extension';
+import { Extension } from './Extension/Extension';
 
 export default function MainPage() {
   return (

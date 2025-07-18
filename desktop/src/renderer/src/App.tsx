@@ -2,7 +2,7 @@ import './index.css'
 import { Navbar } from './components/Navbar';
 import  OllamaAi  from './components/Ollama/OllamaAi';
 import { Precepts } from './components/Precepts/Precepts';
-import { Extension } from './components/Extension';
+import { Extension } from './components/Extension/Extension';
 
 export default function App() {
   return (

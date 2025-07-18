@@ -85,6 +85,45 @@ const OllamaAi: React.FC<OllamaAiProps> = ({ refreshKey }) => {
               position: 'relative',
             }}
           >
+            {/* Info bars at the top of the status area */}
+            {ollamaStatus && !error && (
+              <div
+                style={{
+                  background: '#e6f9e6',
+                  color: '#1b5e20',
+                  fontFamily: 'monospace',
+                  fontSize: 15,
+                  borderRadius: 0,
+                  padding: '2px 6px',
+                  margin: '0 0 12px 0',
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word',
+                  boxDecorationBreak: 'clone',
+                  WebkitBoxDecorationBreak: 'clone',
+                }}
+              >
+                Ollama service is running
+              </div>
+            )}
+            {models.length === 0 && !error && ollamaStatus && (
+              <div
+                style={{
+                  background: '#fff9c4',
+                  color: '#665c00',
+                  fontFamily: 'monospace',
+                  fontSize: 15,
+                  borderRadius: 0,
+                  padding: '2px 6px',
+                  margin: '0 0 12px 0',
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word',
+                  boxDecorationBreak: 'clone',
+                  WebkitBoxDecorationBreak: 'clone',
+                }}
+              >
+                No models found
+              </div>
+            )}
             {error && (
               <div
                 style={{
