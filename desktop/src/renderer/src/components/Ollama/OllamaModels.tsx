@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useModelStore } from "../../store";
+import { useAppStore } from "../../store";
 import { FaApple, FaLinux, FaWindows } from "react-icons/fa";
 
 interface OllamaModelsProps {
@@ -36,8 +36,8 @@ function detectPlatform() {
 }
 
 const OllamaModels: React.FC<OllamaModelsProps> = ({ models, onRefresh }) => {
-  const currentModel = useModelStore((state) => state.currentModel);
-  const setCurrentModel = useModelStore((state) => state.setCurrentModel);
+  const currentModel = useAppStore((state) => state.currentModel);
+  const setCurrentModel = useAppStore((state) => state.setCurrentModel);
   const [removeIdx, setRemoveIdx] = React.useState<number | null>(null);
   const [selectedOS, setSelectedOS] = React.useState<string>(detectPlatform());
 

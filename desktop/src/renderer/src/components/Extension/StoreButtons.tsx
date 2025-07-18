@@ -2,7 +2,7 @@ import { FaChrome, FaFirefox } from "react-icons/fa";
 
 export function StoreButtons() {
     return (
-        <div style={{ width: '100%', marginTop: 24 }}>
+        <div style={{ width: '100%', marginTop: 10 }}>
             <a
                 href="https://chrome.google.com/webstore/detail/YOUR_EXTENSION_ID"
                 target="_blank"

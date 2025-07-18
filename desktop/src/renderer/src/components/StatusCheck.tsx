@@ -1,6 +1,6 @@
 import * as React from "react";
 import axios from "axios";
-import { useModelStore } from "../components/Ollama/../../store";
+import { useAppStore } from "../store";
 
 interface StatusItem {
   name: string;
@@ -21,6 +21,7 @@ const StatusCheck: React.FC<StatusCheckProps> = ({ onRefresh }) => {
   ]);
   const [isChecking, setIsChecking] = React.useState(true);
   const [refreshKey, setRefreshKey] = React.useState(0);
+  const { currentModel, isExtensionActive } = useAppStore();
 
   const checkService = async () => {
     try {
@@ -51,11 +52,8 @@ const StatusCheck: React.FC<StatusCheckProps> = ({ onRefresh }) => {
 
   const checkExtension = async () => {
     try {
-      return new Promise<boolean>((resolve) => {
-        setTimeout(() => {
-          resolve(false);
-        }, 1000);
-      });
+      const response = await axios.get('http://localhost:8000/extension-status', { timeout: 3000 });
+      return response.data?.active === true;
     } catch {
       return false;
     }
@@ -103,7 +101,6 @@ const StatusCheck: React.FC<StatusCheckProps> = ({ onRefresh }) => {
   };
 
   const getStatusText = (item: StatusItem) => {
-    const currentModel = useModelStore.getState().currentModel;
     if (item.status === 'loading') {
       return `> ${item.name} is loading`;
     }
