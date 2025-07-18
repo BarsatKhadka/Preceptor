@@ -57,6 +57,7 @@ def get_models():
 def ollamaEvaluation(model:str):
     tab_info = current_tab()
     precepts = get_all_current_precepts()
+    print(precepts)
     return ollama_evaluation(tab_info["message"] , precepts , model)
 
 
