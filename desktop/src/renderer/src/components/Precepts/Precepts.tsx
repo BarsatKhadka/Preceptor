@@ -61,8 +61,8 @@ export function Precepts() {
             boxShadow: '0 1px 4px 0 rgba(0,0,0,0.04)',
             cursor: 'pointer',
             textDecoration: 'underline',
-            fontFamily: 'monospace',
-            fontSize: 13,
+            fontFamily: 'var(--font-body)',
+            fontSize: 'clamp(13px, 1.2vw, 16px)',
           }} onClick={handleRefreshAll}>
             <svg width="14" height="14" fill="none" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" style={{ marginRight: 2 }}>
               <path d="M4 4v5h5M20 20v-5h-5"/><path d="M5.07 19A9 9 0 1 1 12 21a9 9 0 0 1-6.93-2"/></svg>
@@ -77,7 +77,7 @@ export function Precepts() {
         <div>
           <ul className="mb-2 sm:mb-3 lg:mb-4 space-y-1 sm:space-y-2">
             {!currentPrecept && (
-              <li style={{ color: '#888', fontStyle: 'italic', fontFamily: 'monospace', fontSize: 13 }}>{'> Current precept : (none)'}</li>
+              <li style={{ color: '#888', fontStyle: 'italic', fontFamily: 'var(--font-precept)', fontSize: 'clamp(13px, 1.2vw, 16px)' }}>{'> Current precept : (none)'}</li>
             )}
             {currentPrecept && (
               <li>
@@ -86,8 +86,8 @@ export function Precepts() {
                   borderRadius: 4,
                   padding: '1px 4px',
                   color: '#222',
-                  fontFamily: 'monospace',
-                  fontSize: 13,
+                  fontFamily: 'var(--font-precept)',
+                  fontSize: 'clamp(19px, 1.2vw, 19px)',
                   whiteSpace: 'pre-wrap',
                   wordBreak: 'break-word',
                   boxDecorationBreak: 'clone',
@@ -105,8 +105,8 @@ export function Precepts() {
               padding: '6px 12px',
               marginBottom: 12,
               display: 'inline-block',
-              fontFamily: 'monospace',
-              fontSize: 12,
+              fontFamily: 'var(--font-mono)',
+              fontSize: 'clamp(12px, 1.1vw, 15px)',
               color: '#444',
             }}>
               {`Created at: ${new Date(currentPrecept.time).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`}
@@ -114,16 +114,18 @@ export function Precepts() {
           )}
           <form onSubmit={addPrecept} className="flex flex-col sm:flex-row gap-1 sm:gap-2">
             <input
-              className="flex-1 rounded-md border border-gray-300 bg-white/80 px-2 sm:px-3 py-1 sm:py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-200 transition text-xs sm:text-sm font-mono shadow"
+              className="flex-1 rounded-md border border-gray-300 bg-white/80 px-2 sm:px-3 py-1 sm:py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-200 transition shadow"
               placeholder="Enter to set this as new precept"
               value={input}
               onChange={e => setInput(e.target.value)}
               disabled={loading}
+              style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(12px, 1.1vw, 16px)' }}
             />
             <button
               type="submit"
-              className="px-2 sm:px-3 lg:px-4 py-1 sm:py-2 rounded-md bg-black text-white font-semibold shadow hover:bg-black/80 transition disabled:opacity-60 text-xs sm:text-sm lg:text-base"
+              className="px-2 sm:px-3 lg:px-4 py-1 sm:py-2 rounded-md bg-black text-white font-semibold shadow hover:bg-black/80 transition disabled:opacity-60"
               disabled={loading || !input.trim()}
+              style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(12px, 1.1vw, 16px)' }}
             >
               Set
             </button>

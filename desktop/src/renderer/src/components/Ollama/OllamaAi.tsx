@@ -62,13 +62,13 @@ const OllamaAi: React.FC<OllamaAiProps> = ({ refreshKey }) => {
         
         {/* Right side - Text content and status */}
         <div className="flex flex-col gap-1 sm:gap-2 lg:gap-3 text-center lg:text-left w-full">
-          <h1 className="text-sm sm:text-lg lg:text-2xl font-bold text-gray-900 leading-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <h1 className="text-sm sm:text-lg lg:text-2xl xl:text-2xl font-bold text-gray-900 leading-tight" style={{ fontFamily: 'var(--font-body)' }}>
             Setup Local AI through Ollama
           </h1>
-          <p className="text-xs sm:text-sm lg:text-base text-gray-600 leading-relaxed max-w-md" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <p className="text-xs sm:text-sm lg:text-lg xl:text-md text-gray-600 leading-relaxed max-w-md" style={{ fontFamily: 'var(--font-body)' }}>
             Preceptor uses Ollama to ensure <span className="relative group underline underline-offset-2 text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" tabIndex={0}>
               local AI processing
-              <span className="absolute left-1/2 -translate-x-1/2 mt-2 w-40 sm:w-48 lg:w-64 bg-white text-gray-800 text-xs rounded-lg shadow-lg px-2 sm:px-3 lg:px-4 py-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity z-10 border border-gray-200">
+              <span className="absolute left-1/2 -translate-x-1/2 mt-2 w-40 sm:w-48 lg:w-64 xl:w-80 bg-white text-gray-800 text-xs lg:text-sm rounded-lg shadow-lg px-2 sm:px-3 lg:px-4 py-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity z-10 border border-gray-200" style={{ fontFamily: 'var(--font-body)' }}>
                 Local AI processing means all computations and data analysis happen on your device, ensuring privacy and security.
               </span>
             </span> and keep your data secure. 
@@ -91,8 +91,8 @@ const OllamaAi: React.FC<OllamaAiProps> = ({ refreshKey }) => {
                 style={{
                   background: '#e6f9e6',
                   color: '#1b5e20',
-                  fontFamily: 'monospace',
-                  fontSize: 15,
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 'clamp(15px, 1.5vw, 18px)',
                   borderRadius: 0,
                   padding: '2px 6px',
                   margin: '0 0 12px 0',
@@ -110,8 +110,8 @@ const OllamaAi: React.FC<OllamaAiProps> = ({ refreshKey }) => {
                 style={{
                   background: '#fff9c4',
                   color: '#665c00',
-                  fontFamily: 'monospace',
-                  fontSize: 15,
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 'clamp(15px, 1.5vw, 18px)',
                   borderRadius: 0,
                   padding: '2px 6px',
                   margin: '0 0 12px 0',
@@ -131,8 +131,8 @@ const OllamaAi: React.FC<OllamaAiProps> = ({ refreshKey }) => {
                   borderRadius: 0,
                   padding: '2px 6px',
                   color: '#a94442',
-                  fontFamily: 'monospace',
-                  fontSize: 15,
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 'clamp(15px, 1.5vw, 18px)',
                   whiteSpace: 'pre-wrap',
                   wordBreak: 'break-word',
                   boxDecorationBreak: 'clone',
@@ -145,7 +145,7 @@ const OllamaAi: React.FC<OllamaAiProps> = ({ refreshKey }) => {
             )}
             {loading ? (
               <div className="flex items-center px-4 py-3">
-                <span className="font-mono text-base text-gray-500">Checking Ollama status...</span>
+                <span className="text-base lg:text-lg xl:text-xl text-gray-500" style={{ fontFamily: 'var(--font-mono)' }}>Checking Ollama status...</span>
               </div>
             ) : !ollamaStatus ? (
               <OllamaNotRunning onRefresh={handleRefresh} />

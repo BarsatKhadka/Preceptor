@@ -66,8 +66,8 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
           padding: '4px 12px',
           boxShadow: '0 1px 4px 0 rgba(0,0,0,0.04)',
           color: '#555',
-          fontFamily: 'monospace',
-          fontSize: 13,
+          fontFamily: 'var(--font-body)',
+          fontSize: 'clamp(13px, 1.2vw, 16px)',
         }}>
           <svg width="14" height="14" fill="none" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10"/>
@@ -78,7 +78,7 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
         <button onClick={handleDeleteAllHistory} style={{
           display: 'inline-flex', alignItems: 'center', gap: 3,
           background: '#f3f4f6', border: 'none', color: '#e11d48',
-          fontFamily: 'monospace', fontSize: 13, cursor: 'pointer',
+          fontFamily: 'var(--font-body)', fontSize: 'clamp(13px, 1.2vw, 16px)', cursor: 'pointer',
           padding: '4px 12px', borderRadius: 6,
           boxShadow: '0 1px 4px 0 rgba(0,0,0,0.04)',
           transition: 'background 0.2s',
@@ -97,7 +97,7 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
         </button>
       </div>
       <ul className="space-y-2" style={{ maxHeight: 400, overflowY: 'auto', paddingRight: 2 }}>
-        {historyPrecepts.length === 0 && <li className="text-gray-300 italic text-xs sm:text-sm lg:text-base">No history yet.</li>}
+        {historyPrecepts.length === 0 && <li className="text-gray-300 italic" style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(12px, 1.1vw, 16px)' }}>No history yet.</li>}
         {historyPrecepts.map((p) => (
           <li key={p.id} style={{
             background: '#fff9c4',
@@ -105,9 +105,9 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
             border: '1px solid #e5e7eb',
             boxShadow: '0 1px 4px 0 rgba(180,160,100,0.07)',
             padding: '8px 12px',
-            fontFamily: 'monospace',
+            fontFamily: 'var(--font-precept)',
             color: '#222',
-            fontSize: 13,
+            fontSize: 'clamp(13px, 1.2vw, 16px)',
             marginBottom: 2,
             display: 'flex',
             flexDirection: 'column',
@@ -117,7 +117,7 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
           }}>
             <span>{p.precept}</span>
             {p.movedAt && (
-              <span style={{ fontSize: 11, color: '#6b7280', marginTop: 1 }}>
+              <span style={{ fontSize: 'clamp(11px, 1vw, 14px)', color: '#6b7280', marginTop: 1, fontFamily: 'var(--font-mono)' }}>
                 {`moved at: ${new Date(p.movedAt).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`}
               </span>
             )}

@@ -58,8 +58,8 @@ const OllamaModels: React.FC<OllamaModelsProps> = ({ models, onRefresh }) => {
         padding: '0 16px',
         height: 36,
       }}>
-        <span className="font-mono text-sm text-black">{'>'} Available Models</span>
-        <button onClick={onRefresh} className="underline text-xs text-gray-600 hover:text-black p-0 bg-none border-none font-mono">Refresh</button>
+        <span className="text-sm lg:text-base xl:text-lg text-black" style={{ fontFamily: 'var(--font-mono)' }}>{'>'} Available Models</span>
+        <button onClick={onRefresh} className="underline text-xs lg:text-sm text-gray-600 hover:text-black p-0 bg-none border-none" style={{ fontFamily: 'var(--font-mono)' }}>Refresh</button>
       </div>
       {/* Models List */}
       <div style={{ width: '100%', padding: '0 16px' }}>
@@ -68,20 +68,20 @@ const OllamaModels: React.FC<OllamaModelsProps> = ({ models, onRefresh }) => {
             <React.Fragment key={model}>
               <div className="flex items-center justify-between w-full py-1 border-b border-gray-100 last:border-b-0">
                 {currentModel === model ? (
-                  <span className="font-mono text-sm text-black"> Current model: {model}</span>
+                  <span className="text-sm lg:text-base text-black" style={{ fontFamily: 'var(--font-mono)' }}> Current model: {model}</span>
                 ) : (
-                  <span className="font-mono text-sm text-black">{model}</span>
+                  <span className="text-sm lg:text-base text-black" style={{ fontFamily: 'var(--font-mono)' }}>{model}</span>
                 )}
                 <div className="flex items-center gap-1">
-                  <button onClick={() => setRemoveIdx(removeIdx === idx ? null : idx)} className="underline text-xs text-red-600 hover:text-red-800 p-0 bg-none border-none font-mono">{removeIdx === idx ? 'Close' : 'Remove'}</button>
+                  <button onClick={() => setRemoveIdx(removeIdx === idx ? null : idx)} className="underline text-xs lg:text-sm text-red-600 hover:text-red-800 p-0 bg-none border-none" style={{ fontFamily: 'var(--font-body)' }}>{removeIdx === idx ? 'Close' : 'Remove'}</button>
                   {currentModel !== model && (
-                    <button onClick={() => handleUseModel(model)} className="underline text-xs text-gray-600 hover:text-black p-0 bg-none border-none font-mono">Use</button>
+                    <button onClick={() => handleUseModel(model)} className="underline text-xs lg:text-sm text-gray-600 hover:text-black p-0 bg-none border-none" style={{ fontFamily: 'var(--font-body)' }}>Use</button>
                   )}
                 </div>
               </div>
               {removeIdx === idx && (
                 <div className="w-full flex flex-col items-center justify-center bg-gray-50 rounded-lg shadow-sm px-0 py-3 mb-2" style={{ border: '1px solid #eee' }}>
-                  <div className="text-sm font-semibold text-black text-center mb-2">Remove a model</div>
+                  <div className="text-sm lg:text-base font-semibold text-black text-center mb-2" style={{ fontFamily: 'var(--font-body)' }}>Remove a model</div>
                   {/* OS Selector */}
                   <div className="flex items-center justify-center gap-1 mb-3 px-2 w-full">
                     {osOptions.map(os => (
@@ -103,16 +103,16 @@ const OllamaModels: React.FC<OllamaModelsProps> = ({ models, onRefresh }) => {
                         }}
                       >
                         {os.logo}
-                        <span className="text-xs mt-1 text-gray-700">{os.label}</span>
+                        <span className="text-xs lg:text-sm mt-1 text-gray-700" style={{ fontFamily: 'var(--font-body)' }}>{os.label}</span>
                       </button>
                     ))}
                   </div>
                   <div className="flex flex-col items-center gap-1 w-full max-w-xs mx-auto">
-                    <div className="font-mono text-xs text-black text-left w-full mb-1">
+                    <div className="text-xs lg:text-sm text-black text-left w-full mb-1" style={{ fontFamily: 'var(--font-body)' }}>
                       1) Open {selectedOS === 'win' ? 'Powershell' : 'Terminal'}
                     </div>
                     <div className="w-full flex items-center bg-gray-100 border border-gray-200 rounded-md px-2 py-1 mb-1">
-                      <span className="font-mono text-xs text-gray-900 flex-1 select-all">ollama rm {model}</span>
+                      <span className="text-xs lg:text-sm text-gray-900 flex-1 select-all" style={{ fontFamily: 'var(--font-mono)' }}>ollama rm {model}</span>
                     </div>
                   </div>
                 </div>

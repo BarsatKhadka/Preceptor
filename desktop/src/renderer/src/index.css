@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import sophisticated font system */
+@import url('https://fonts.googleapis.com/css2?family=General+Sans:ital,wght@0,200..700;1,200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sohne+Mono:wght@400;500;600&display=swap');
+
+/* Fallback fonts for better loading */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,200..800;1,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap');
+
+/* Base font variables */
+:root {
+  --font-body: 'General Sans', 'Space Grotesk', sans-serif;
+  --font-precept: 'Caladea', 'Newsreader', serif;
+  --font-mono: 'Söhne Mono', 'Fira Mono', monospace;
+}
+
+/* Apply base font to body */
+body {
+  font-family: var(--font-body);
+}

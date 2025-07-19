@@ -17,10 +17,10 @@ export function Extension() {
                 
                 {/* Right side - Text content and status */}
                 <div className="flex flex-col gap-1 sm:gap-2 lg:gap-3 text-center lg:text-left w-full">
-                    <h1 className="text-sm sm:text-lg lg:text-2xl font-bold text-gray-900 leading-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <h1 className="text-sm sm:text-lg lg:text-2xl xl:text-2xl font-bold text-gray-900 leading-tight" style={{ fontFamily: 'var(--font-body)' }}>
                         Install browser extension
                     </h1>
-                    <p className="text-xs sm:text-sm lg:text-base text-gray-600 leading-relaxed max-w-md" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <p className="text-xs sm:text-sm lg:text-lg xl:text-md text-gray-600 leading-relaxed max-w-md" style={{ fontFamily: 'var(--font-body)' }}>
                         Preceptor uses a browser extension to get the current tab name from your browser and pass it to local AI.
                     </p>
                     

@@ -9,7 +9,7 @@ export function Navbar(): React.JSX.Element {
                     alt="Preceptor Icon" 
                     className="w-8 h-8 sm:w-10 sm:h-10 lg:w-16 lg:h-16 object-cover"
                 />
-                <span className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900 tracking-wide">Preceptor</span>
+                <span className="text-sm sm:text-lg lg:text-xl xl:text-xl font-bold text-gray-900 tracking-wide" style={{ fontFamily: 'var(--font-body)' }}>Preceptor</span>
             </div>
         </nav>
     );

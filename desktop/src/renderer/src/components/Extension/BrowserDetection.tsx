@@ -91,7 +91,7 @@ const BrowserDetection: React.FC = () => {
         padding: '0 16px',
         height: 36,
       }}>
-        <span className="font-mono text-sm text-black">{'>'} Which store does your browser use?</span>
+        <span className="text-sm lg:text-base xl:text-md text-black" style={{ fontFamily: 'var(--font-mono)' }}>{'>'} Which store does your browser use?</span>
       </div>
       
       {/* Browser Detection Input */}
@@ -109,8 +109,8 @@ const BrowserDetection: React.FC = () => {
                 padding: '6px 10px',
                 border: '1px solid #e5e7eb',
                 borderRadius: '6px',
-                fontFamily: 'monospace',
-                fontSize: '12px',
+                fontFamily: 'var(--font-body)',
+                fontSize: 'clamp(12px, 1.1vw, 16px)',
                 outline: 'none',
               }}
             />
@@ -121,8 +121,8 @@ const BrowserDetection: React.FC = () => {
                 background: '#f3f4f6',
                 border: '1px solid #e5e7eb',
                 borderRadius: '6px',
-                fontFamily: 'monospace',
-                fontSize: '12px',
+                fontFamily: 'var(--font-body)',
+                fontSize: 'clamp(12px, 1.1vw, 16px)',
                 cursor: 'pointer',
                 color: '#374151',
               }}
@@ -134,8 +134,8 @@ const BrowserDetection: React.FC = () => {
           {/* Store display */}
           {detectedStore && (
             <div className="w-full flex items-center justify-between py-1 px-2 bg-gray-50 border border-gray-200 rounded-md">
-              <span className="font-mono text-xs text-gray-700">Store:</span>
-              <span className="font-mono text-xs font-semibold text-black">{detectedStore}</span>
+              <span className="text-xs lg:text-sm text-gray-700" style={{ fontFamily: 'var(--font-mono)' }}>Store:</span>
+              <span className="text-xs lg:text-sm font-semibold text-black" style={{ fontFamily: 'var(--font-mono)' }}>{detectedStore}</span>
             </div>
           )}
         </div>
