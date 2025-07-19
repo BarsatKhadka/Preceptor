@@ -18,7 +18,14 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
 
   const fetchHistory = async () => {
     const res = await axios.get("http://localhost:8000/getAllHistoryPrecepts");
-    setHistoryPrecepts(Array.isArray(res.data) ? res.data : []);
+    const historyData = Array.isArray(res.data) ? res.data : [];
+    // Sort in reverse chronological order (most recent first)
+    const sortedHistory = historyData.sort((a, b) => {
+      const dateA = a.movedAt ? new Date(a.movedAt).getTime() : 0;
+      const dateB = b.movedAt ? new Date(b.movedAt).getTime() : 0;
+      return dateB - dateA; // Reverse order (newest first)
+    });
+    setHistoryPrecepts(sortedHistory);
   };
 
   useEffect(() => {
@@ -97,7 +104,20 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
         </button>
       </div>
       <ul className="space-y-2" style={{ maxHeight: 400, overflowY: 'auto', paddingRight: 2 }}>
-        {historyPrecepts.length === 0 && <li className="text-gray-300 italic" style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(12px, 1.1vw, 16px)' }}>No history yet.</li>}
+        {historyPrecepts.length === 0 && (
+          <li>
+            <span style={{
+              background: '#fff9c4',
+              padding: '1px 4px',
+              fontFamily: 'var(--font-body)',
+              color: '#888',
+              fontSize: 'clamp(12px, 1.1vw, 16px)',
+              fontStyle: 'italic',
+            }}>
+              No history yet.
+            </span>
+          </li>
+        )}
         {historyPrecepts.map((p) => (
           <li key={p.id} style={{
             background: '#fff9c4',
