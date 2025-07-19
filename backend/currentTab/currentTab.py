@@ -16,9 +16,15 @@ def get_active_window_info_windows():
     _, pid = win32process.GetWindowThreadProcessId(hwnd)
     try:
         proc = psutil.Process(pid)
-        return proc.name()  
+        app_name = proc.name().lower().replace(".exe", "")  
+        
+        if any(browser_key in app_name for browser_key in BROWSERS):
+            return latest_tab_info
+        
+        return app_name
     except psutil.NoSuchProcess:
         return None
+
 
 def get_active_window_info_linux():
     if(shutil.which("xdotool") is None):
@@ -30,10 +36,8 @@ def get_active_window_info_linux():
         active_window_id = subprocess.check_output(['xdotool', 'getactivewindow']).decode().strip()
         active_wm_class = subprocess.check_output(['xprop','-id',active_window_id,'WM_CLASS']).decode()
         app_name =  active_wm_class.strip().split('=')[-1].split(',')[-1].strip().strip('"').lower()
-        if app_name in BROWSERS:
-            tab_tile = latest_tab_info['title']
-            tab_url = latest_tab_info['url']
-            return latest_tab_info 
+        if any(browser_key in app_name for browser_key in BROWSERS):
+            return latest_tab_info
         return app_name
     except subprocess.CalledProcessError as e : 
         return f"error {e}"
