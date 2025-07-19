@@ -2,3 +2,7 @@ fastapi
 uvicorn
 ollama
 requests
+
+#if you are using the app in windows
+pywin32
+psutil

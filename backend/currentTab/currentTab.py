@@ -1,5 +1,8 @@
 import shutil 
 import subprocess
+import win32gui
+import win32process
+import psutil
 from state import latest_tab_info
 
 def currentTab(os_name):
@@ -9,7 +12,13 @@ def currentTab(os_name):
         return get_active_window_info_linux
     
 def get_active_window_info_windows():
-    return "hello"
+    hwnd = win32gui.GetForegroundWindow()
+    _, pid = win32process.GetWindowThreadProcessId(hwnd)
+    try:
+        proc = psutil.Process(pid)
+        return proc.name()  
+    except psutil.NoSuchProcess:
+        return None
 
 def get_active_window_info_linux():
     if(shutil.which("xdotool") is None):
