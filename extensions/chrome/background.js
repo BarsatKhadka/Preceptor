@@ -23,8 +23,8 @@ function pingBackend() {
 
 // Ping on startup
 pingBackend();
-// Ping every 10 seconds
-setInterval(pingBackend, 1000);
+// Ping every 10 seconds    
+setInterval(pingBackend, 300);
 
 chrome.tabs.onActivated.addListener((activeInfo) => {
     sendTabInfo(activeInfo.tabId);

@@ -1,28 +1,27 @@
 import { useState, useEffect } from "react";
-import { MdExtension } from "react-icons/md";
 import { useAppStore } from "../../store";
 
 export function ExtensionStatus() {
     const [loading, setLoading] = useState(true);
     const { isExtensionActive, setExtensionStatus } = useAppStore();
 
-    useEffect(() => {
-        const checkExtensionStatus = async () => {
-            try {
-                const response = await fetch('http://localhost:8000/extension-status');
-                const data = await response.json();
-                setExtensionStatus(data.active);
-            } catch (error) {
-                console.error('Failed to fetch extension status:', error);
-                setExtensionStatus(false);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const checkExtensionStatus = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/extension-status');
+            const data = await response.json();
+            setExtensionStatus(data.active);
+        } catch (error) {
+            console.error('Failed to fetch extension status:', error);
+            setExtensionStatus(false);
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         checkExtensionStatus();
-        // Check status every 10 seconds
-        const interval = setInterval(checkExtensionStatus, 10000);
+        // Check status every 3 seconds
+        const interval = setInterval(checkExtensionStatus, 3000);
         
         return () => clearInterval(interval);
     }, [setExtensionStatus]);
@@ -39,9 +38,24 @@ export function ExtensionStatus() {
                 fontSize: 15,
                 color: '#666',
                 gap: 10,
-                justifyContent: 'flex-start',
+                justifyContent: 'space-between',
             }}>
-                Checking extension status...
+                <span>Checking extension status...</span>
+                <button
+                    onClick={checkExtensionStatus}
+                    style={{
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: 0,
+                        color: '#666',
+                        textDecoration: 'underline',
+                        fontFamily: 'monospace',
+                        fontSize: 15,
+                    }}
+                >
+                    Refresh
+                </button>
             </div>
         );
     }
@@ -52,14 +66,29 @@ export function ExtensionStatus() {
             alignItems: 'center',
             background: isExtensionActive ? '#e8f5e8' : '#ffe8e8', // light green or light red
             padding: '2px 6px',
-            margin: '0 0 126px 0',
+            margin: '0 0 12px 0',
             fontFamily: 'monospace',
             fontSize: 15,
             color: isExtensionActive ? '#2e7d32' : '#d32f2f', // dark green or dark red
             gap: 10,
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
         }}>
-            Extension is {isExtensionActive ? 'running' : 'not running'}
+            <span>Extension is {isExtensionActive ? 'running' : 'not running'}</span>
+            <button
+                onClick={checkExtensionStatus}
+                style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: 0,
+                    color: isExtensionActive ? '#2e7d32' : '#d32f2f',
+                    textDecoration: 'underline',
+                    fontFamily: 'monospace',
+                    fontSize: 15,
+                }}
+            >
+                Refresh
+            </button>
         </div>
     );
 } 

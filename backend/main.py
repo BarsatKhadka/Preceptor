@@ -109,7 +109,7 @@ def extension_alive():
 @app.get("/extension-status")
 def extension_status():
     now = time.time()
-    active = (now - last_extension_ping) < 60
+    active = (now - last_extension_ping) < 5
     return {"active": active, "last_ping": last_extension_ping}
 
 @app.get("/test")
