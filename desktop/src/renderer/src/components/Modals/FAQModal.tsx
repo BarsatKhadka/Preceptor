@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 
 interface FAQModalProps {
   isOpen: boolean;
@@ -12,36 +13,64 @@ interface FAQItem {
 
 const faqData: FAQItem[] = [
   {
-    question: "What is a precept?",
-    answer: "A precept is your personal commitment or rule to help you stay focused and achieve your goals. For example, 'I will avoid social media during work hours' or 'I will read for 30 minutes every day.'"
+    question: "Does Preceptor spy on me or record my screen?",
+    answer: "No. Preceptor does not record your screen or capture any visuals. It only checks your current tab name to understand your focus context — and even that data is never stored."
   },
   {
-    question: "How do I set a new precept?",
-    answer: "Simply type your precept in the input field and click 'Set'. Your new precept will become your current focus and will be displayed prominently."
+    question: "What kind of data does Preceptor collect?",
+    answer: "Preceptor only reads the name of your current browser or app tab. This data is fed into the local AI in real-time and is not stored or sent anywhere."
   },
   {
-    question: "What is Ollama and why do I need it?",
-    answer: "Ollama is a local AI service that runs on your device. Preceptor uses it to provide AI-powered features while keeping your data private and secure on your local machine."
+    question: "Where is my data stored?",
+    answer: "Your \"precepts\" (goal reminders and history) are stored locally on your computer. Preceptor does not use the cloud, and your data stays fully on your device."
   },
   {
-    question: "How do I install the browser extension?",
-    answer: "Click on the 'Install Extension' button in the Extension section. This will take you to the Chrome Web Store where you can install the Preceptor browser extension."
+    question: "Can I delete my data?",
+    answer: "Yes. You can permanently delete your precept history anytime by clicking \"Delete\" in the app."
   },
   {
-    question: "Can I have multiple precepts at once?",
-    answer: "Currently, Preceptor focuses on one precept at a time to help you maintain clear focus. You can change your precept anytime by setting a new one."
+    question: "How does Preceptor help me stay focused?",
+    answer: "Preceptor gently reminds you of your goals based on your current activity. If you're drifting off-task, it nudges you back toward your intended focus using your own goals and precepts."
   },
   {
-    question: "How do I view my precept history?",
-    answer: "Your precept history is automatically displayed in the History section below your current precept. You can see all your previous precepts and when they were created."
+    question: "Can I customize my goals and reminders?",
+    answer: "Yes, you can define your own goals (called \"precepts\") and tailor the reminders to your workflow and preferences."
   },
   {
-    question: "Is my data stored locally?",
-    answer: "Yes! All your precepts and data are stored locally on your device. We use local AI processing through Ollama to ensure your privacy and data security."
+    question: "Does Preceptor work offline?",
+    answer: "Yes. After a one-time setup of your local AI model, Preceptor runs fully offline — no internet connection is needed after that."
   },
   {
-    question: "How do I refresh the status?",
-    answer: "Click the 'Refresh' button in the top-right corner of the Precepts section to manually refresh the status of Ollama and browser extension."
+    question: "Can I pause or disable Preceptor temporarily?",
+    answer: "Yes, you can pause or turn off Preceptor anytime from within the app."
+  },
+  {
+    question: "What platforms does Preceptor support?",
+    answer: "Preceptor supports Windows, macOS, and Linux operating systems."
+  },
+  {
+    question: "Does it affect system performance?",
+    answer: "Preceptor is lightweight and optimized to run in the background without slowing down your system."
+  },
+  {
+    question: "Can I integrate Preceptor with other productivity tools?",
+    answer: "Currently, Preceptor works as a standalone application. Integration with other productivity tools may be available in future updates."
+  },
+  {
+    question: "How do I install and set up Preceptor?",
+    answer: "Download Preceptor for your platform, install it, and follow the setup guide to configure your local AI model and browser extension."
+  },
+  {
+    question: "Is Preceptor open source?",
+    answer: "Yes, Preceptor is 100% open source and free to use."
+  },
+  {
+    question: "What should I do if something's not working?",
+    answer: "You can check the documentation or open an issue on the GitHub repo for help."
+  },
+  {
+    question: "Who is Preceptor for?",
+    answer: "Preceptor is for anyone looking to stay focused — whether you're a student, professional, coder, writer, or just want help sticking to your goals."
   }
 ];
 

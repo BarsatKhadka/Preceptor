@@ -1,12 +1,12 @@
 import shutil 
 import subprocess
-import win32gui
-import win32process
-import psutil
 from state import latest_tab_info
 
 def currentTab(os_name):
     if os_name.lower() == "windows":
+        import win32gui
+        import win32process
+        import psutil
         return get_active_window_info_windows
     else:
         return get_active_window_info_linux
