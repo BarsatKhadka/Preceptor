@@ -33,15 +33,8 @@ const StatusCheck: React.FC<StatusCheckProps> = ({ onRefresh }) => {
   };
 
   const checkOllama = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/ollama', { timeout: 3000 });
-      const isRunning = response.data === true;
-      setOllamaStatus(isRunning);
-      return isRunning;
-    } catch {
-      setOllamaStatus(false);
-      return false;
-    }
+    // Use the shared state from the store instead of making API calls
+    return ollamaStatus === true;
   };
 
   const checkModels = async () => {
@@ -82,9 +75,9 @@ const StatusCheck: React.FC<StatusCheckProps> = ({ onRefresh }) => {
     if (serviceRunning) {
       updateStatus(0, 'running', '');
     }
-    // Ollama
+    // Ollama - use shared state
     const ollamaRunning = await checkOllama();
-    updateStatus(1, ollamaRunning ? 'running' : 'error', '');
+    updateStatus(1, ollamaRunning ? 'running' : (ollamaStatus === null ? 'loading' : 'error'), '');
     // Models
     const modelsFound = await checkModels();
     updateStatus(2, modelsFound ? 'running' : 'not-found', '');
