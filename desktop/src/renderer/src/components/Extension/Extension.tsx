@@ -1,6 +1,7 @@
 import { MdExtension } from "react-icons/md";
 import { StoreButtons } from "./StoreButtons";
 import { ExtensionStatus } from "./ExtensionStatus";
+import BrowserDetection from "./BrowserDetection";
 import { useAppStore } from "../../store";
 
 export function Extension() {
@@ -26,6 +27,7 @@ export function Extension() {
                     {/* Extension Status Component */}
                     <div className="mt-4 w-full">
                         <ExtensionStatus />
+                        <BrowserDetection />
                         <StoreButtons />
                     </div>
                 </div>
