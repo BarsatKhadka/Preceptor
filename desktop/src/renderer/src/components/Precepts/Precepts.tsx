@@ -62,7 +62,7 @@ export function Precepts() {
             color: '#222',
           }} tabIndex={0}>
             Setup your <span className="text-purple-700" style={{ textDecoration: 'underline' }}>precept</span>
-            <span className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 sm:w-72 lg:w-80 xl:w-96 bg-white text-gray-800 text-xs lg:text-sm rounded-lg shadow-lg px-3 lg:px-4 py-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity z-10 border border-gray-200" style={{ fontFamily: 'var(--font-body)' }}>
+            <span className="absolute left-full ml-2 mt-2 w-64 sm:w-72 lg:w-80 xl:w-96 bg-white text-gray-800 text-xs lg:text-sm rounded-lg shadow-lg px-3 lg:px-4 py-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity z-[9999] border border-gray-200" style={{ fontFamily: 'var(--font-body)' }}>
               A precept is your personal commitment or rule to help you stay focused. E.g., 'I will avoid social media during work hours.'
             </span>
           </span>
