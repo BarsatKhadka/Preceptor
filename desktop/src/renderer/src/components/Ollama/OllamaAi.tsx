@@ -4,16 +4,17 @@ import axios from "axios";
 import OllamaStatus from "./OllamaStatus";
 import OllamaModels from "./OllamaModels";
 import OllamaNotRunning from "./OllamaNotRunning";
+import { useAppStore } from "../../store";
 
 interface OllamaAiProps {
   refreshKey?: number;
 }
 
 const OllamaAi: React.FC<OllamaAiProps> = ({ refreshKey }) => {
-  const [ollamaStatus, setOllamaStatus] = useState<boolean | null>(null);
   const [models, setModels] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { ollamaStatus, setOllamaStatus } = useAppStore();
 
   const checkOllamaStatus = async () => {
     try {

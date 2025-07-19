@@ -21,7 +21,7 @@ const StatusCheck: React.FC<StatusCheckProps> = ({ onRefresh }) => {
   ]);
   const [isChecking, setIsChecking] = React.useState(true);
   const [refreshKey, setRefreshKey] = React.useState(0);
-  const { currentModel, isExtensionActive } = useAppStore();
+  const { currentModel, isExtensionActive, ollamaStatus, setOllamaStatus } = useAppStore();
 
   const checkService = async () => {
     try {
@@ -35,8 +35,11 @@ const StatusCheck: React.FC<StatusCheckProps> = ({ onRefresh }) => {
   const checkOllama = async () => {
     try {
       const response = await axios.get('http://localhost:8000/ollama', { timeout: 3000 });
-      return response.data === true; 
+      const isRunning = response.data === true;
+      setOllamaStatus(isRunning);
+      return isRunning;
     } catch {
+      setOllamaStatus(false);
       return false;
     }
   };
