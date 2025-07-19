@@ -3,8 +3,13 @@ import subprocess
 from state import latest_tab_info
 
 def currentTab(os_name):
-    if os_name.lower() == "linux":
+    if os_name.lower() == "windows":
+        return get_active_window_info_windows
+    else:
         return get_active_window_info_linux
+    
+def get_active_window_info_windows():
+    return "hello"
 
 def get_active_window_info_linux():
     if(shutil.which("xdotool") is None):

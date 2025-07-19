@@ -9,6 +9,7 @@ from state import latest_tab_info
 from precept.sqliteDb import add_current_precept , move_all_current_precept_to_history , delete_all_precept_history , get_all_current_precepts , get_all_history_precepts , move_current_precept_to_history , delete_history_precept
 from localAI.ollama import ollama_evaluation
 import ollama
+from precept.sqliteDb import create_table
 
 last_extension_ping = 0
 
@@ -115,3 +116,7 @@ def extension_status():
 @app.get("/test")
 def test():
     return True
+
+@app.on_event("startup")
+def startup():
+    create_table()
