@@ -79,7 +79,7 @@ const BrowserDetection: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center bg-white shadow-sm px-0" style={{ maxWidth: 420, margin: '24px auto 0 auto' }}>
+    <div className="w-full flex flex-col items-center justify-center bg-white shadow-sm px-0" style={{ maxWidth: 420, margin: '16px auto 0 auto' }}>
       {/* Full-width gray bar at the top */}
       <div style={{
         width: '100%',
@@ -88,17 +88,17 @@ const BrowserDetection: React.FC = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: '0 24px',
-        height: 44,
+        padding: '0 16px',
+        height: 36,
       }}>
-        <span className="font-mono text-base text-black">{'>'} Which store does your browser use?</span>
+        <span className="font-mono text-sm text-black">{'>'} Which store does your browser use?</span>
       </div>
       
       {/* Browser Detection Input */}
-      <div style={{ width: '100%', padding: '20px' }}>
-        <div className="flex flex-col items-center gap-4">
+      <div style={{ width: '100%', padding: '12px' }}>
+        <div className="flex flex-col items-center gap-2">
           {/* Input field */}
-          <div className="w-full flex items-center gap-3">
+          <div className="w-full flex items-center gap-2">
             <input
               type="text"
               placeholder="Enter your browser name"
@@ -106,23 +106,23 @@ const BrowserDetection: React.FC = () => {
               onChange={handleBrowserNameChange}
               style={{
                 flex: 1,
-                padding: '8px 12px',
+                padding: '6px 10px',
                 border: '1px solid #e5e7eb',
                 borderRadius: '6px',
                 fontFamily: 'monospace',
-                fontSize: '14px',
+                fontSize: '12px',
                 outline: 'none',
               }}
             />
             <button
               onClick={handleAutoDetect}
               style={{
-                padding: '8px 12px',
+                padding: '6px 10px',
                 background: '#f3f4f6',
                 border: '1px solid #e5e7eb',
                 borderRadius: '6px',
                 fontFamily: 'monospace',
-                fontSize: '14px',
+                fontSize: '12px',
                 cursor: 'pointer',
                 color: '#374151',
               }}
@@ -133,9 +133,9 @@ const BrowserDetection: React.FC = () => {
           
           {/* Store display */}
           {detectedStore && (
-            <div className="w-full flex items-center justify-between py-2 px-3 bg-gray-50 border border-gray-200 rounded-md">
-              <span className="font-mono text-sm text-gray-700">Store:</span>
-              <span className="font-mono text-sm font-semibold text-black">{detectedStore}</span>
+            <div className="w-full flex items-center justify-between py-1 px-2 bg-gray-50 border border-gray-200 rounded-md">
+              <span className="font-mono text-xs text-gray-700">Store:</span>
+              <span className="font-mono text-xs font-semibold text-black">{detectedStore}</span>
             </div>
           )}
         </div>

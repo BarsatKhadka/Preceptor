@@ -32,12 +32,12 @@ export function ExtensionStatus() {
                 display: 'flex',
                 alignItems: 'center',
                 background: '#f5f5f5',
-                padding: '6px 12px',
-                margin: '0 0 12px 0',
+                padding: '4px 8px',
+                margin: '0 0 8px 0',
                 fontFamily: 'monospace',
-                fontSize: 15,
+                fontSize: 13,
                 color: '#666',
-                gap: 10,
+                gap: 8,
                 justifyContent: 'space-between',
             }}>
                 <span>Checking extension status...</span>
@@ -51,7 +51,7 @@ export function ExtensionStatus() {
                         color: '#666',
                         textDecoration: 'underline',
                         fontFamily: 'monospace',
-                        fontSize: 15,
+                        fontSize: 13,
                     }}
                 >
                     Refresh
@@ -65,12 +65,12 @@ export function ExtensionStatus() {
             display: 'flex',
             alignItems: 'center',
             background: isExtensionActive ? '#e8f5e8' : '#ffe8e8', // light green or light red
-            padding: '2px 6px',
-            margin: '0 0 12px 0',
+            padding: '1px 4px',
+            margin: '0 0 8px 0',
             fontFamily: 'monospace',
-            fontSize: 15,
+            fontSize: 13,
             color: isExtensionActive ? '#2e7d32' : '#d32f2f', // dark green or dark red
-            gap: 10,
+            gap: 8,
             justifyContent: 'space-between',
         }}>
             <span>Extension is {isExtensionActive ? 'running' : 'not running'}</span>
@@ -84,7 +84,7 @@ export function ExtensionStatus() {
                     color: isExtensionActive ? '#2e7d32' : '#d32f2f',
                     textDecoration: 'underline',
                     fontFamily: 'monospace',
-                    fontSize: 15,
+                    fontSize: 13,
                 }}
             >
                 Refresh

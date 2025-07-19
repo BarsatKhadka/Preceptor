@@ -58,28 +58,28 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10, justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, justifyContent: 'space-between' }}>
         <span style={{
-          display: 'inline-flex', alignItems: 'center', gap: 6,
+          display: 'inline-flex', alignItems: 'center', gap: 4,
           background: '#f3f4f6',
-          borderRadius: 8,
-          padding: '6px 16px',
+          borderRadius: 6,
+          padding: '4px 12px',
           boxShadow: '0 1px 4px 0 rgba(0,0,0,0.04)',
           color: '#555',
           fontFamily: 'monospace',
-          fontSize: 15,
+          fontSize: 13,
         }}>
-          <svg width="16" height="16" fill="none" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+          <svg width="14" height="14" fill="none" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10"/>
             <polyline points="12 6 12 12 16 14"/>
           </svg>
           History
         </span>
         <button onClick={handleDeleteAllHistory} style={{
-          display: 'inline-flex', alignItems: 'center', gap: 4,
+          display: 'inline-flex', alignItems: 'center', gap: 3,
           background: '#f3f4f6', border: 'none', color: '#e11d48',
-          fontFamily: 'monospace', fontSize: 15, cursor: 'pointer',
-          padding: '6px 16px', borderRadius: 8,
+          fontFamily: 'monospace', fontSize: 13, cursor: 'pointer',
+          padding: '4px 12px', borderRadius: 6,
           boxShadow: '0 1px 4px 0 rgba(0,0,0,0.04)',
           transition: 'background 0.2s',
         }}
@@ -87,7 +87,7 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
         onMouseOut={e => e.currentTarget.style.background = '#f3f4f6'}
         title="Delete all history"
         >
-          <svg width="16" height="16" fill="none" stroke="#e11d48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+          <svg width="14" height="14" fill="none" stroke="#e11d48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
             <polyline points="3 6 5 6 21 6"/>
             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>
             <line x1="10" y1="11" x2="10" y2="17"/>
@@ -96,28 +96,28 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
           Delete All
         </button>
       </div>
-      <ul className="space-y-3" style={{ maxHeight: 480, overflowY: 'auto', paddingRight: 2 }}>
-        {historyPrecepts.length === 0 && <li className="text-gray-300 italic text-sm sm:text-base">No history yet.</li>}
+      <ul className="space-y-2" style={{ maxHeight: 400, overflowY: 'auto', paddingRight: 2 }}>
+        {historyPrecepts.length === 0 && <li className="text-gray-300 italic text-xs sm:text-sm lg:text-base">No history yet.</li>}
         {historyPrecepts.map((p) => (
           <li key={p.id} style={{
             background: '#fff9c4',
-            borderRadius: 10,
-            border: '1.5px solid #e5e7eb',
-            boxShadow: '0 1px 6px 0 rgba(180,160,100,0.07)',
-            padding: '10px 16px',
+            borderRadius: 8,
+            border: '1px solid #e5e7eb',
+            boxShadow: '0 1px 4px 0 rgba(180,160,100,0.07)',
+            padding: '8px 12px',
             fontFamily: 'monospace',
             color: '#222',
-            fontSize: 15,
+            fontSize: 13,
             marginBottom: 2,
             display: 'flex',
             flexDirection: 'column',
-            gap: 2,
+            gap: 1,
             wordBreak: 'break-word',
             position: 'relative',
           }}>
             <span>{p.precept}</span>
             {p.movedAt && (
-              <span style={{ fontSize: 13, color: '#6b7280', marginTop: 2 }}>
+              <span style={{ fontSize: 11, color: '#6b7280', marginTop: 1 }}>
                 {`moved at: ${new Date(p.movedAt).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`}
               </span>
             )}
@@ -125,8 +125,8 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
               onClick={() => handleDeleteHistoryPrecept(p.id)}
               style={{
                 position: 'absolute',
-                top: 8,
-                right: 8,
+                top: 6,
+                right: 6,
                 background: 'none',
                 border: 'none',
                 color: '#e11d48',
@@ -137,7 +137,7 @@ const HistoryPrecepts: React.FC<HistoryPreceptsProps> = ({ refreshKey }) => {
               }}
               title="Delete this precept"
             >
-              <svg width="16" height="16" fill="none" stroke="#e11d48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <svg width="14" height="14" fill="none" stroke="#e11d48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
                 <polyline points="3 6 5 6 21 6" />
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
                 <line x1="10" y1="11" x2="10" y2="17" />

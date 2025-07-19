@@ -139,9 +139,9 @@ const StatusCheck: React.FC<StatusCheckProps> = ({ onRefresh }) => {
           <div
             key={item.name}
             style={{
-              marginBottom: 4,
+              marginBottom: 3,
               fontFamily: 'monospace',
-              fontSize: 15,
+              fontSize: 13,
               opacity: 0,
               transform: 'translateY(30px)',
               animation: `slideUpFadeIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards`,
