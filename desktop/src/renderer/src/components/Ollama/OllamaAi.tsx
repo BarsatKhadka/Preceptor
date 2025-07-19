@@ -66,7 +66,7 @@ const OllamaAi: React.FC<OllamaAiProps> = ({ refreshKey }) => {
             Setup Local AI through Ollama
           </h1>
           <p className="text-xs sm:text-sm lg:text-lg xl:text-md text-gray-600 leading-relaxed max-w-md" style={{ fontFamily: 'var(--font-body)' }}>
-            Preceptor uses Ollama to ensure <span className="relative group underline underline-offset-2 text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" tabIndex={0}>
+            Preceptor uses Ollama to ensure <span className="relative group underline underline-offset-2 text-purple-700 cursor-pointer hover:text-purple-900 hover:underline" tabIndex={0}>
               local AI processing
               <span className="absolute left-1/2 -translate-x-1/2 mt-2 w-40 sm:w-48 lg:w-64 xl:w-80 bg-white text-gray-800 text-xs lg:text-sm rounded-lg shadow-lg px-2 sm:px-3 lg:px-4 py-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity z-10 border border-gray-200" style={{ fontFamily: 'var(--font-body)' }}>
                 Local AI processing means all computations and data analysis happen on your device, ensuring privacy and security.

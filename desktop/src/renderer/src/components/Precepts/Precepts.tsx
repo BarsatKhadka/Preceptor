@@ -49,8 +49,23 @@ export function Precepts() {
          style={{ backgroundColor: '#fffde5', backgroundImage: 'repeating-linear-gradient(to bottom, transparent, transparent 31px, #f3e9d2 32px)' }}>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-yellow-50/20 pointer-events-none"></div>
       <div className="relative z-10 w-full max-w-lg mx-auto flex flex-col gap-2 sm:gap-4 lg:gap-8">
-        {/* Refresh Button on Top */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 4 }}>
+        {/* Refresh Button and Setup Precept Link on Top */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+          <span className="relative group" style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
+            cursor: 'pointer',
+            fontFamily: 'var(--font-body)',
+            fontSize: 'clamp(16px, 1.4vw, 20px)',
+            fontWeight: '600',
+            color: '#222',
+          }} tabIndex={0}>
+            Setup your <span className="text-purple-700" style={{ textDecoration: 'underline' }}>precept</span>
+            <span className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 sm:w-72 lg:w-80 xl:w-96 bg-white text-gray-800 text-xs lg:text-sm rounded-lg shadow-lg px-3 lg:px-4 py-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity z-10 border border-gray-200" style={{ fontFamily: 'var(--font-body)' }}>
+              A precept is your personal commitment or rule to help you stay focused. E.g., 'I will avoid social media during work hours.'
+            </span>
+          </span>
           <span style={{
             background: '#f3f4f6',
             borderRadius: 6,
@@ -87,7 +102,7 @@ export function Precepts() {
                   padding: '1px 4px',
                   color: '#222',
                   fontFamily: 'var(--font-precept)',
-                  fontSize: 'clamp(19px, 1.2vw, 19px)',
+                  fontSize: 'clamp(18px, 1.2vw, 18px)',
                   whiteSpace: 'pre-wrap',
                   wordBreak: 'break-word',
                   boxDecorationBreak: 'clone',
@@ -106,7 +121,7 @@ export function Precepts() {
               marginBottom: 12,
               display: 'inline-block',
               fontFamily: 'var(--font-mono)',
-              fontSize: 'clamp(12px, 1.1vw, 15px)',
+              fontSize: 'clamp(10px, 1.1vw, 13px)',
               color: '#444',
             }}>
               {`Created at: ${new Date(currentPrecept.time).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`}
